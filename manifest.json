@@ -1,0 +1,22 @@
+{
+  "name": "myVocabulary",
+  "description": "Save some words.",
+  "version": "0.1",
+  "icons": {
+    "48": "icon/48.png"
+  },
+  "manifest_version": 2,
+  "minimum_chrome_version": "31.0",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "browser_action": {
+    "default_title": "Open vocabulary",
+    "default_icon": "icon/48.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+		"scripts": ["js/background.js"]
+  }
+}

@@ -1,12 +1,15 @@
 import { Word } from './word.js';
 
 export let StorageService = {
-    get() {
-        let tempArr = [];
-        chrome.storage.local.get(data => {
-            tempArr = data;
+    output() {
+        chrome.storage.local.get(function(data) {
+            document.querySelector('tbody').innerHTML = "";
+            var counter = 0;
+            for(let el in data){
+                counter++;
+                document.querySelector('tbody').innerHTML += `
+                    <tr><td> ${counter} </td><td> ${data[el].name} </td><td> ${data[el].translation} </td></tr>`;
+            }
         });
-        console.log(tempArr);
-        return tempArr;
     }
 }

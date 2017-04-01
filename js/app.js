@@ -16,17 +16,9 @@ function init(entry) {
     if (bg.entryToLoad)
       loadEntry(bg.entryToLoad);
   });
-  output();
+  StorageService.output();
 }
 
-
-function output(){
-  let wordArray = Array.from(StorageService.get());
-  console.log(wordArray);
-  wordArray.forEach(el => {
-    document.querySelector('tbody').innerHTML += `<tr><td> 1 </td><td> ${el.name} </td><td> ${el.translation} </td></tr>`;
-  });
-}
 
 function diction(){
   chrome.runtime.sendMessage({page: 'diction'});
@@ -36,16 +28,15 @@ function learn(){
 }
 
 function write(){
-  var item = {};
-  var word = document.querySelector('#word').value;
-  var translation = document.querySelector('#translation').value;
-  var obj = new Word(word, translation);
+  let item = {};
+  let word = document.querySelector('#word').value;
+  let translation = document.querySelector('#translation').value;
+  let obj = new Word(word, translation);
   item[word] =  obj;
 
   chrome.storage.local.set(item, function() {
-    document.querySelector('tbody').innerHTML = '';
-    output();
+    StorageService.output()
   });
 }
 
-document.addEventListener("DOMContentLoaded", init)
+document.addEventListener("DOMContentLoaded", init);

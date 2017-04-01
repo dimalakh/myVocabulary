@@ -21,4 +21,5 @@ export let StorageService = {
     removeWord(name) {
         chrome.storage.local.remove(name);
     }
+
 }

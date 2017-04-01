@@ -16,27 +16,39 @@ function init(entry) {
     if (bg.entryToLoad)
       loadEntry(bg.entryToLoad);
   });
-  StorageService.output();
+  output();
+  StorageService.removeWord('word');
 }
 
+function write() {
+  let item = {};
+  let word = document.querySelector('#word').value;
+  let translation = document.querySelector('#translation').value;
+  item[word]  = new Word(word, translation);
+  chrome.storage.local.set(item, output());
+}
 
+function deleteWord(e) {
+  StorageService.removeWord(name);
+}
+
+function output() {
+  StorageService.get()
+  .then(data => {
+      document.querySelector('tbody').innerHTML = "";
+      data.forEach((el, index) => {
+        index++;
+        document.querySelector('tbody').innerHTML += `<tr><td>${index}</td><td> ${el.name} </td><td> ${el.translation}</td><td><button class="ui button" id="delete"><i class="large remove circle icon"></i></button></td></tr>`;
+      });
+  });
+}
+
+// Send messages to BackgroundPage, navigation between pages
 function diction(){
   chrome.runtime.sendMessage({page: 'diction'});
 }
 function learn(){
   chrome.runtime.sendMessage({page: 'learn'});
-}
-
-function write(){
-  let item = {};
-  let word = document.querySelector('#word').value;
-  let translation = document.querySelector('#translation').value;
-  let obj = new Word(word, translation);
-  item[word] =  obj;
-
-  chrome.storage.local.set(item, function() {
-    StorageService.output()
-  });
 }
 
 document.addEventListener("DOMContentLoaded", init);

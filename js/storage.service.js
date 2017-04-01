@@ -1,15 +1,24 @@
 import { Word } from './word.js';
 
 export let StorageService = {
-    output() {
-        chrome.storage.local.get(function(data) {
-            document.querySelector('tbody').innerHTML = "";
-            var counter = 0;
-            for(let el in data){
-                counter++;
-                document.querySelector('tbody').innerHTML += `
-                    <tr><td> ${counter} </td><td> ${data[el].name} </td><td> ${data[el].translation} </td></tr>`;
+    get() {
+        return new Promise((resolved, rejected) =>{
+            chrome.storage.local.get(data => {
+                    resolved(data);
+            });
+        }).then(data => {
+            let tempArr = [];
+            for(let prop in data) {
+                 tempArr.push(data[prop]);
             }
+            tempArr.sort((a,b) => {
+                return a.time - b.time;
+            })
+            return tempArr;
         });
+    },
+
+    removeWord(name) {
+        chrome.storage.local.remove(name);
     }
 }

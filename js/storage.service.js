@@ -12,7 +12,7 @@ export let StorageService = {
                  tempArr.push(data[prop]);
             }
             tempArr.sort((a,b) => {
-                return a.time - b.time;
+                return b.time - a.time;
             })
             return tempArr;
         });

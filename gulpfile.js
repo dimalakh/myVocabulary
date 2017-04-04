@@ -19,7 +19,14 @@ gulp.task('browserify', function() {
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('build', ['babel', 'browserify']);
+gulp.task('browserify2', function() {
+    return gulp.src('dist/learn.js', { read: false })
+        .pipe(browserify({
+        }))
+        .pipe(gulp.dest('dist'))
+});
+
+gulp.task('build', ['babel', 'browserify', 'browserify2']);
 
 gulp.task('watch', function() {
     gulp.watch('js/*.js', ['babel'])

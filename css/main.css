@@ -1,11 +1,29 @@
-/*.ui.input{
+.pop-input{
   width: 100%;
   margin-bottom: 10px;
 }
 button{
   margin-bottom: 10px!important;
   box-sizing: border-box;
-}*/
+}
 button.ui.inverted.red.button.right.hidden{
   display: none;
 }
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* delete icon */
+.delete {
+  color: grey;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.delete:hover {
+  color: red;
+}
+

@@ -13,13 +13,25 @@ function init(entry) {
   dictionBtn.addEventListener('click', diction);
   learnBtn.addEventListener('click', learn);
   
-
   chrome.runtime.getBackgroundPage(function(bg) {
     if (bg.entryToLoad)
       loadEntry(bg.entryToLoad);
   });
 }
 
+// delete word from storage
+function deleteWord() {
+  StorageService.removeWord(this.dataset.name);
+}
+
+// clear value of all inputs on the page
+function clearInput() {
+  document.querySelectorAll('input').forEach(inpt => {
+    inpt.value = '';
+  });
+}
+
+// get data from input and set it in storage
 function write() {
   let item = {};
   let word = document.querySelector('#word').value;
@@ -30,23 +42,26 @@ function write() {
   }
 
   item[word]  = new Word(word, translation);
-  chrome.storage.local.set(item, output());
+  chrome.storage.local.set(item, function(){
+    output();
+    clearInput();
+  });
 }
 
-function deleteWord(e) {
-  console.log(2);
-  StorageService.removeWord(name);
-}
-
+// render table
 function output() {
   StorageService.get()
   .then(data => {
       document.querySelector('tbody').innerHTML = "";
       data.forEach((el, index) => {
         index++;
-        document.querySelector('tbody').innerHTML += `<tr><td>${index}</td><td> ${el.name} </td><td> ${el.translation}</td></tr>`;
-    });
-      
+        document.querySelector('tbody').innerHTML += `<tr><td>${index}</td><td> ${el.name} </td><td> ${el.translation}</td><td><i class="icon remove delete" data-name="${el.name}"></i></td></tr>`;
+      });
+      // adds EventListener for all delete buttons
+      let deleteBtns = document.querySelectorAll('.delete');
+      deleteBtns.forEach(el => {
+        el.addEventListener('click', deleteWord);
+      });
   });
 }
 

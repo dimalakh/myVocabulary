@@ -55,13 +55,14 @@ function output() {
       document.querySelector('tbody').innerHTML = "";
       data.forEach((el, index) => {
         index++;
-        document.querySelector('tbody').innerHTML += `<tr><td>${index}</td><td> ${el.name} </td><td> ${el.translation}</td><td><i class="icon remove delete" data-name="${el.name}"></i></td></tr>`;
+        document.querySelector('tbody').innerHTML += `<tr><td>${index}</td><td> ${el.name} </td><td> ${el.translation}</td><td>${el.correctAnswers}/${el.tries}</td><td><i class="icon remove delete" data-name="${el.name}"></i></td></tr>`;
       });
       // adds EventListener for all delete buttons
       let deleteBtns = document.querySelectorAll('.delete');
       deleteBtns.forEach(el => {
         el.addEventListener('click', deleteWord);
       });
+      console.log(data);
   });
 }
 

@@ -1,45 +1,48 @@
 import { StorageService } from './storage.service.js';  
 
 function init() {
-    let checkBtn = document.querySelector('#check-btn');
-    checkBtn.addEventListener('click', checkWord);
-
     displayWord();
-
     chrome.runtime.getBackgroundPage(function(bg) {
-    if (bg.entryToLoad)
-      loadEntry(bg.entryToLoad);
-  });
-}
-
-function setTaskWord() {
-    return StorageService.get().then(arr => {  
-             let randomNumber = getRandomInt(0, arr.length);
-             let randomWord = arr[randomNumber];
-             return randomWord;
-           });
-}
-
-function displayWord() {
-    setTaskWord().then(word => {
-        document.querySelector('#word-display').innerHTML = word.translation;
-        document.querySelector('#word-display').dataset.correct = word.name;
+         if (bg.entryToLoad) loadEntry(bg.entryToLoad);
     });
 }
 
-function checkWord() {
-    let wordDisplay = document.querySelector('#word-display');
-    let checkInpt = document.querySelector('#check-input');
-     if(wordDisplay.dataset.correct === checkInpt.value) {
-         console.log('ok');
-         displayWord();
-     } else {
-         console.log('neok');
-     }
+function displayWord() {
+    StorageService.getRandomWord().then(word => {
+        let skipBtn = document.querySelector('#skip-btn');
+        let checkBtn = document.querySelector('#check-btn');
+        document.querySelector('#word-display').innerHTML = word.translation;
+        skipBtn.addEventListener('click', displayWord);
+        checkBtn.addEventListener('click', function() {
+            checkWord(word);
+        });
+    });
 }
 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+function checkWord(word) {
+    let item = {};
+    let checkInpt = document.querySelector('#check-input');
+    item[word.name] = word;
+    item[word.name].tries += 1;
+     if(word.name === checkInpt.value) { 
+         item[word.name].correctAnswers += 1;
+         chrome.storage.local.set(item, function(){
+             clearInput();
+         });
+         displayWord();
+     } else {
+         chrome.storage.local.set(item, function(){});
+     }
+     console.log(item[word.name]);
 }
+
+// clear value of all inputs on the page
+function clearInput() {
+  document.querySelectorAll('input').forEach(inpt => {
+    inpt.value = '';
+  });
+}
+
+
 
 document.addEventListener("DOMContentLoaded", init);

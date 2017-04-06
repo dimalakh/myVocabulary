@@ -3,7 +3,7 @@ export class Word {
         this.name = wordName;
         this.translation = translationValue;
         this.tries = 0;
-        this.correctAnsvers = 0;
+        this.correctAnswers = 0;
         this.time = Date.now();
     }
 }

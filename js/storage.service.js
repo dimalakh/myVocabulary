@@ -18,8 +18,20 @@ export let StorageService = {
         });
     },
 
+    getRandomWord() {
+        return this.get().then(arr => {  
+             let randomNumber = this.getRandomInt(0, arr.length);
+             let randomWord = arr[randomNumber];
+             return randomWord;
+           });
+    },
+
     removeWord(name) {
         chrome.storage.local.remove(name);
+    },
+
+    getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 
 }

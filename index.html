@@ -7,39 +7,42 @@
   <script src="dist/main.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="ui container">
-  <br>
-  <header>
-    <div class="ui input">
-      <input id="word" placeholder="word">
-    </div>
-    <div class="ui input">
-      <input id="translation" placeholder="translation">
-    </div>
+  <div class="ui container">
+    <!-- header start -->
+    <header>
+      <div class="form-outer">
+        <div class="ui input">
+          <input id="word" placeholder="word">
+        </div>
+        <div class="ui input">
+          <input id="translation" placeholder="translation">
+        </div>
+        <div class="ui inline cookie nag">
+          <span class="title">
+          </span>
+        </div>
+      </div> 
       <button id="write" class="ui primary button">write</button>
-      <button id="diction" class="ui inverted red button right hidden">DICTIONARY</button>
-      <div class="ui inline cookie nag">
-        <span class="title">
-          Word is added to your vocabulary.
-        </span>
-        <i class="close icon"></i>
-      </div>
+      <button id="diction" class="hidden">DICTIONARY</button>
       <button id="learn" class="ui olive button"><i class="edit icon"></i>Learn words</button>
-  </header>
+    </header>
+    <!-- header end -->
 
-  <table class="ui single line table">
-  <thead>
-    <tr>
-      <th width="50">№</th>
-      <th>Words</th>
-      <th>Translations</th>
-      <th>mark</th>
-      <th  width="50"></th>
-   </tr>
- </thead>
-  <tbody>
-  </tbody>
-</table>
-</div>
+    <!-- table start -->
+    <table class="ui single line table">
+      <thead>
+        <tr>
+          <th width="50">№</th>
+          <th>Words</th>
+          <th>Translations</th>
+          <th>mark</th>
+          <th  width="50"></th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <!-- table end -->
+  </div>
 </body>
 </html>

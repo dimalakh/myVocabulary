@@ -19,8 +19,6 @@ function displayWord() {
               checkBtn.removeEventListener('click', cheking);
             }  
         });
-        console.log('display:');
-        console.log(word);
     });
 }
 
@@ -28,21 +26,20 @@ function checkWord(word) {
     let item = {};
     let checkInpt = document.querySelector('#check-input');
     item[word.name] = word;
+    item[word.name].tries += 1;
     
      if(word.name == checkInpt.value) { 
          item[word.name].correctAnswers += 1;
-         item[word.name].tries += 1;
-         chrome.storage.local.set(item, function(){
+         chrome.storage.local.set(item, () => {
              clearInput();
-             showResult('positive');
+             showResult(true);
          });
-         setTimeout(function() {
-                displayWord();
-         }, 2000)
+         setTimeout(() => {
+            displayWord();
+         }, 1200);
          return true;
      } else {
-         item[word.name].tries += 1;
-         chrome.storage.local.set(item, function() {
+         chrome.storage.local.set(item, () => {
              showResult('negative');
          });
          return false;
@@ -57,18 +54,25 @@ function clearInput() {
   });
 }
 
+//show result of words checking (change body bg-color)
 function showResult(state) {
-    let bgColor = null;
-    state == 'positive' ? 
-    bgColor = "rgba(33, 186, 69, 0.35)" :
-    bgColor =  "rgba(255, 0, 0, 0.35)";
     let body = document.querySelector('body');
-    body.style.backgroundColor = bgColor;
-    setTimeout(function() {
-        body.style.backgroundColor = '#fff';
-         }, 2000)
-}
+    let inputOuter = document.querySelector('.input');
+    let wordDisplay = document.querySelector('#word-display');
 
+    if (state == true) {
+        inputOuter.classList.remove('error');
+        body.classList.add('correct');
+    } else {
+        inputOuter.classList.add('error');
+        wordDisplay.classList.add('shake', 'animated');
+    }
+
+    setTimeout(() => {
+        body.classList.remove('correct');
+        wordDisplay.classList.remove('shake', 'animated');
+    }, 1200)
+}
 
 
 document.addEventListener("DOMContentLoaded", init);

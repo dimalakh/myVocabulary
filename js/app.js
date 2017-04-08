@@ -38,12 +38,14 @@ function write() {
   let translation = document.querySelector('#translation').value;
   
   if(word.length < 2 || translation.length < 2) {
+    nag('Type corect word.', 'rgba(255, 0, 0, 0.44)');
     return 0;
   }
 
   item[word]  = new Word(word, translation);
   chrome.storage.local.set(item, function(){
     output();
+    nag(word + ' is added.', 'rgba(181, 204, 24, 0.52)');
     clearInput();
   });
 }
@@ -62,8 +64,19 @@ function output() {
       deleteBtns.forEach(el => {
         el.addEventListener('click', deleteWord);
       });
-      console.log(data);
   });
+}
+
+//show/hide pop-up messages
+function nag(message, color) {
+  let nag = document.querySelector('.nag');
+  nag.style.display = 'block';
+  nag.style.backgroundColor = color;
+  nag.children[0].innerHTML = message;
+
+  setTimeout(function(){
+    nag.style.display = 'none';
+  }, 2000);
 }
 
 // Send messages to BackgroundPage, navigation between pages

@@ -8,14 +8,19 @@ function init() {
 }
 
 function displayWord() {
+    let skipBtn = document.querySelector('#skip-btn');
+    let checkBtn = document.querySelector('#check-btn');
+
     StorageService.getRandomWord().then(word => {
-        let skipBtn = document.querySelector('#skip-btn');
-        let checkBtn = document.querySelector('#check-btn');
         document.querySelector('#word-display').innerHTML = word.translation;
         skipBtn.addEventListener('click', displayWord);
-        checkBtn.addEventListener('click', function() {
-            checkWord(word);
+        checkBtn.addEventListener('click', function cheking() {
+            if(checkWord(word) == true) {
+              checkBtn.removeEventListener('click', cheking);
+            }  
         });
+        console.log('display:');
+        console.log(word);
     });
 }
 
@@ -23,15 +28,24 @@ function checkWord(word) {
     let item = {};
     let checkInpt = document.querySelector('#check-input');
     item[word.name] = word;
-    item[word.name].tries += 1;
-     if(word.name === checkInpt.value) { 
+    
+     if(word.name == checkInpt.value) { 
          item[word.name].correctAnswers += 1;
+         item[word.name].tries += 1;
          chrome.storage.local.set(item, function(){
              clearInput();
+             showResult('positive');
          });
-         displayWord();
+         setTimeout(function() {
+                displayWord();
+         }, 2000)
+         return true;
      } else {
-         chrome.storage.local.set(item, function(){});
+         item[word.name].tries += 1;
+         chrome.storage.local.set(item, function() {
+             showResult('negative');
+         });
+         return false;
      }
      console.log(item[word.name]);
 }
@@ -41,6 +55,18 @@ function clearInput() {
   document.querySelectorAll('input').forEach(inpt => {
     inpt.value = '';
   });
+}
+
+function showResult(state) {
+    let bgColor = null;
+    state == 'positive' ? 
+    bgColor = "rgba(33, 186, 69, 0.35)" :
+    bgColor =  "rgba(255, 0, 0, 0.35)";
+    let body = document.querySelector('body');
+    body.style.backgroundColor = bgColor;
+    setTimeout(function() {
+        body.style.backgroundColor = '#fff';
+         }, 2000)
 }
 
 

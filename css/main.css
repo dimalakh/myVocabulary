@@ -1,3 +1,6 @@
+body {
+  transition: .4s;
+}
 .pop-input{
   width: 100%;
   margin-bottom: 10px;
@@ -32,5 +35,10 @@ button.ui.inverted.red.button.right.hidden{
 
 .delete:hover {
   color: red;
+}
+
+/*nag*/
+.nag.positive, .nag.positive:hover {
+  background: rgba(33, 186, 69, 0.48);
 }
 

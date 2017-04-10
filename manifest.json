@@ -1,7 +1,7 @@
 {
   "name": "myVocabulary",
-  "description": "Save some words.",
-  "version": "0.1",
+  "description": "This extension helps to save unknown words and learn them.",
+  "version": "1.0",
   "icons": {
     "48": "icon/48.png"
   },

@@ -1,0 +1,33 @@
+{
+  "name": "chrome-extension-vocabulary",
+  "version": "0.5.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel js -d dist --presets es2015",
+    "browserify": "browserify dist/app.js -o dist/bundle.js",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimalakh/myVocabulary.git"
+  },
+  "author": "Dima Lakh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dimalakh/myVocabulary/issues"
+  },
+  "homepage": "https://github.com/dimalakh/myVocabulary#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.7.2",
+    "babel-polyfill": "^6.9.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babelify": "^7.3.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "http-server": "^0.9.0"
+  }
+}

@@ -1,8 +1,74 @@
-.ui.input{
-  width: 100%;
+body {
+  transition: .4s;
+}
+.correct {
+  background: rgba(33, 186, 69, 0.35);
+}
+.incorrect {
+  background: rgba(255, 0, 0, 0.35);
+}
+.hidden {
+  display: none;
+}
+
+/* POP-UP START */
+  .pop-up {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .pop-up .input {
+    width: 100%;
+  }
+  .pop-up .input:first-child {
+    margin: 0 0 10px 0;
+  }
+  .pop-up button.button {
+    margin-top: 10px;
+  }
+/* POP-UP END */
+
+/* LEARN-PAGE START */
+.ui.container.flex {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 500px;
+  text-align: center;
+}
+
+/*error display */
+#word-display {
+  font-size: 35px;
+  transition: .5s;;
+}
+
+#check-input {
+  text-align: center;
+}
+/* LEARN-PAGE END */
+
+/* MAIN-PAGE START */
+header {
+  margin: 20px 0 0 0;
+}
+.form-outer {
+  float: left;
+  margin-right: 5px;
+}
+.form-outer .nag {
   margin-bottom: 10px;
 }
-button{
-  margin-bottom: 10px!important;
-  box-sizing: border-box;
+.delete {
+  color: grey;
+  cursor: pointer;
+  transition: .3s;
 }
+
+.delete:hover {
+  color: red;
+}
+
+
+
+

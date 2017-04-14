@@ -13,7 +13,7 @@ function init(entry) {
 
 
 function output(){
-  chrome.storage.local.get(function(data) {
+  chrome.storage.sync.get(function(data) {
     var counter = 0;
     for(x in data){
       counter++;
@@ -44,7 +44,7 @@ function write(){
   obj.translation = translation;
   item[word] =  obj;
 
-  chrome.storage.local.set(item, function() {
+  chrome.storage.sync.set(item, function() {
     $('tbody').empty();
     output();
     $('.cookie.nag')

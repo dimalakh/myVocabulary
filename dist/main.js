@@ -46,7 +46,7 @@ function write() {
   }
 
   item[word] = new _word.Word(word, translation);
-  chrome.storage.local.set(item, function () {
+  chrome.storage.sync.set(item, function () {
     output();
     nag(word + ' is added.', 'rgba(181, 204, 24, 0.52)');
     clearInput();
@@ -106,7 +106,7 @@ var _word = require('./word.js');
 var StorageService = exports.StorageService = {
     get: function get() {
         return new Promise(function (resolved, rejected) {
-            chrome.storage.local.get(function (data) {
+            chrome.storage.sync.get(function (data) {
                 resolved(data);
             });
         }).then(function (data) {
@@ -130,7 +130,7 @@ var StorageService = exports.StorageService = {
         });
     },
     removeWord: function removeWord(name) {
-        chrome.storage.local.remove(name);
+        chrome.storage.sync.remove(name);
     },
     getRandomInt: function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;

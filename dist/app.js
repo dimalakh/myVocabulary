@@ -45,7 +45,7 @@ function write() {
   }
 
   item[word] = new _word.Word(word, translation);
-  chrome.storage.local.set(item, function () {
+  chrome.storage.sync.set(item, function () {
     output();
     nag(word + ' is added.', 'rgba(181, 204, 24, 0.52)');
     clearInput();

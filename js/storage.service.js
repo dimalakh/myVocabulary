@@ -3,7 +3,7 @@ import { Word } from './word.js';
 export let StorageService = {
     get() {
         return new Promise((resolved, rejected) =>{
-            chrome.storage.local.get(data => {
+            chrome.storage.sync.get(data => {
                     resolved(data);
             });
         }).then(data => {
@@ -27,7 +27,7 @@ export let StorageService = {
     },
 
     removeWord(name) {
-        chrome.storage.local.remove(name);
+        chrome.storage.sync.remove(name);
     },
 
     getRandomInt(min, max) {

@@ -1,4 +1,4 @@
-import { Word } from './word.js';
+import { Word } from './models/word.js';
 import { StorageService } from './storage.service.js';  
 
 var currentEntry = null;

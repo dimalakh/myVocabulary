@@ -1,4 +1,4 @@
-import { Word } from './word.js';
+import { Word } from './models/word.js';
 
 export let StorageService = {
     get() {

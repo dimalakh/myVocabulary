@@ -1,10 +1,9 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const browserify = require('gulp-browserify');
-const rename = require("gulp-rename");
- 
+
 gulp.task('babel', () => {
-    return gulp.src('src/js/*.js')
+    return gulp.src('src/js/**/*.js')
         .pipe(babel({
             presets: ['es2015']
         }))
@@ -22,6 +21,7 @@ gulp.task('replace', () => {
             'src/*.html',
             'src/**/*.css',
             'src/*.json',
+            'src/**/*.png',
             'src/**/*.eot',
             'src/**/*.svg',
             'src/**/*.ttf',

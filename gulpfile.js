@@ -4,31 +4,36 @@ const browserify = require('gulp-browserify');
 const rename = require("gulp-rename");
  
 gulp.task('babel', () => {
-    return gulp.src('js/*.js')
+    return gulp.src('src/js/*.js')
         .pipe(babel({
             presets: ['es2015']
         }))
+        .pipe(gulp.dest('dist/temp'));
+});
+
+gulp.task('browserify', () => {
+    return gulp.src(['dist/temp/app.js', 'dist/temp/background.js', 'dist/temp/learn.js'], { read: false })
+        .pipe(browserify({}))
+        .pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('replace', () => {
+    return gulp.src([
+            'src/*.html',
+            'src/**/*.css',
+            'src/*.json',
+            'src/**/*.eot',
+            'src/**/*.svg',
+            'src/**/*.ttf',
+            'src/**/*.otf',
+            'src/**/*.woff',
+            'src/**/*.woff'
+        ])
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('browserify', function() {
-    return gulp.src('dist/app.js', { read: false })
-        .pipe(browserify({
-        }))
-        .pipe(rename('main.js'))
-        .pipe(gulp.dest('dist'))
-});
+gulp.task('build', ['babel', 'browserify', 'replace']);
 
-gulp.task('browserify2', function() {
-    return gulp.src('dist/learn.js', { read: false })
-        .pipe(browserify({
-        }))
-        .pipe(gulp.dest('dist'))
-});
-
-gulp.task('build', ['babel', 'browserify', 'browserify2']);
-
-gulp.task('watch', function() {
-    gulp.watch('js/*.js', ['babel'])
-    gulp.watch('dist/app.js', ['browserify'])
-});
+// gulp.task('watch', function() {
+//     gulp.watch('js/*.js', ['babel'])
+// });

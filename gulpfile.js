@@ -11,25 +11,25 @@ gulp.task('babel', () => {
 });
 
 gulp.task('browserify', () => {
-    return gulp.src(['dist/temp/app.js', 'dist/temp/background.js', 'dist/temp/learn.js'], { read: false })
+    return gulp.src(['dist/temp/diction.js', 'dist/temp/popup.js', 'dist/temp/background.js', 'dist/temp/learn.js'], { read: false })
         .pipe(browserify({}))
         .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('replace', () => {
     return gulp.src([
-            'src/*.html',
-            'src/**/*.css',
-            'src/*.json',
-            'src/**/*.png',
-            'src/**/*.eot',
-            'src/**/*.svg',
-            'src/**/*.ttf',
-            'src/**/*.otf',
-            'src/**/*.woff',
-            'src/**/*.woff'
-        ])
-        .pipe(gulp.dest('dist'));
+        'src/*.html',
+        'src/**/*.css',
+        'src/*.json',
+        'src/**/*.png',
+        'src/**/*.eot',
+        'src/**/*.svg',
+        'src/**/*.ttf',
+        'src/**/*.otf',
+        'src/**/*.woff',
+        'src/**/*.woff'
+    ])
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build', ['babel', 'browserify', 'replace']);

@@ -1,4 +1,4 @@
-import { Language } from 'language';
+import { Language } from './language.js';
 
 export class Store {
     constructor (basicLang) {
@@ -6,11 +6,11 @@ export class Store {
     }
 
     addLanguage (language) {
-        Object.defineProperty(this, language, {
+        Object.defineProperty(this, language.name, {
             enumerable: true,
             configurable: true,
             writable: true,
-            value: new Language(language)
+            value: language
         });
     }
 }

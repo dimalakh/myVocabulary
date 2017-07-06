@@ -27,7 +27,7 @@ gulp.task('replace', () => {
         'src/**/*.ttf',
         'src/**/*.otf',
         'src/**/*.woff',
-        'src/**/*.woff'
+        'src/**/*.woff2'
     ])
     .pipe(gulp.dest('dist'));
 });

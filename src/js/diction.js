@@ -1,8 +1,11 @@
+import firebase, { initAuth } from './auth.js';
 import { goToLearn } from './helpers/navigation.js';
 import { gcService } from './helpers/gcservice.js';
 
 function init () {
-    let learnBtn = document.querySelector('#learn');
+    initAuth();
+
+    const learnBtn = document.querySelector('#learn');
 
     learnBtn.addEventListener('click', goToLearn);
 

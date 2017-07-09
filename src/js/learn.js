@@ -1,4 +1,4 @@
-import { StorageService } from './storage.service.js';  
+import { StorageService } from './helpers/navigation.js';
 
 function init() {
     displayWord();

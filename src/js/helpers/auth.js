@@ -1,14 +1,18 @@
-import { config } from './helpers/config.js';
+import { config } from './config.js';
 import firebase from 'firebase';
 
 firebase.initializeApp(config);
 
 export function initAuth () {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user)
-            return console.log(user);
+    return new Promise(resolve => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                resolve(user.uid);
+                return;
+            }
 
-        startSignIn();
+            startSignIn();
+        });
     });
 }
 

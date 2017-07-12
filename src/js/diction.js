@@ -1,25 +1,19 @@
-import firebase, { initAuth } from './auth.js';
 import { goToLearn } from './helpers/navigation.js';
-import { gcService } from './helpers/gcservice.js';
+import { getUserData } from './helpers/firebase.service.js';
+import { Store } from './models/store.js';
 
 function init () {
-    initAuth();
-
     const learnBtn = document.querySelector('#learn');
+
+    getUserData().then(data => {
+        const store = new Store('ukrainian');
+        return store.fromData(data);
+    });
 
     learnBtn.addEventListener('click', goToLearn);
 
     // eslint-disable-next-line no-undef
     chrome.runtime.getBackgroundPage(() => {});
-
-    const basicStore = gcService.createStore('esk');
-    gcService.getStore()
-    .then(data => console.log(data));
-    gcService.updateStore(basicStore);
-    // setTimeout(() => {
-    //     gcService.getStore()
-    //     .then(data => console.log(data));
-    // }, 10000);
 }
 
 document.addEventListener('DOMContentLoaded', init);

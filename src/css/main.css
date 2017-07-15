@@ -37,6 +37,17 @@ body {
   .pop-up .input:first-child {
     margin: 0 0 10px 0;
   }
+  .pop-up #ok, .pop-up #error {
+    float: right;
+    height:  36px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pop-up #ok.active, .pop-up #error.active {
+    display: flex;
+  }
 /* POP-UP END */
 
 /* LEARN-PAGE START */

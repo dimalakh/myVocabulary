@@ -1,5 +1,4 @@
 import { goToDiction, goToAddLang } from './helpers/navigation.js';
-import { saveWord } from './helpers/firebase.service.js';
 import { Word } from './models/word.js';
 
 function init () {
@@ -32,7 +31,7 @@ function init () {
         const activeLangName = document.querySelector('.active').innerHTML;
         const word = new Word(wordInput.value, translationInput.value);
 
-        saveWord(activeLangName, word).then(result => {
+        word.create(activeLangName).then(result => {
             if (result === true)
                 okIndicator.classList.add('active');
 

@@ -1,13 +1,12 @@
 import { goToLearn } from './helpers/navigation.js';
-import { getUserData, setUserData, saveLang } from './helpers/firebase.service.js';
-import { Store } from './models/store.js';
 import { Language } from './models/language.js';
 
 function init () {
     const learnBtn = document.querySelector('#learn');
     // const store = new Store('ukrainian');
-    const newLang = new Language('Ukrainian');
-    saveLang();
+    const lang = new Language('English');
+    lang.load();
+    console.log(lang);
     // store.addLanguage(newLang);
     // console.log(store);
     // setUserData(store);

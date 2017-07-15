@@ -16,14 +16,26 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
   }
+  .pop-up .header {
+    margin-bottom: 10px;
+  }
+  .pop-up .label {
+    cursor: pointer;
+    opacity: .3;
+  }
+  .pop-up .label.active {
+    opacity: 1;
+  }
+  .pop-up .add-lang {
+    cursor: pointer;
+    padding: 0px 15px;
+  }
   .pop-up .input {
     width: 100%;
+    margin-bottom: 15px;
   }
   .pop-up .input:first-child {
     margin: 0 0 10px 0;
-  }
-  .pop-up button.button {
-    margin-top: 10px;
   }
 /* POP-UP END */
 

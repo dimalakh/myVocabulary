@@ -11,3 +11,10 @@ export function goToLearn () {
         page: 'learn'
     });
 }
+
+export function goToAddLang () {
+    // eslint-disable-next-line no-undef
+    chrome.runtime.sendMessage({
+        page: 'languages'
+    });
+}

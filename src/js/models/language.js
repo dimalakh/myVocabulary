@@ -1,8 +1,9 @@
-import { save, getData } from '../helpers/firebase.service.js';
+import { save, remove, getData } from '../helpers/firebase.service.js';
 
 export class Language {
     constructor (name) {
         this.name = name;
+        this.active = false;
         this.flag = name + '.png';
         this.storage = {};
     }
@@ -11,17 +12,35 @@ export class Language {
         return new Promise(resolve => {
             const path = `${this.name}`;
 
-            save(path, this).then(result => {
-                resolve(result);
-            });
+            if (this.name.length >= 1) {
+                save(path, this).then(result => {
+                    resolve(result);
+                });
+            } else {
+                resolve(false);
+            }
         });
     }
 
     load () {
         const path = `${this.name}`;
 
-        getData(path).then(data => {
-            Object.assign(this, data);
+        return new Promise(resolve => {
+            getData(path).then(data => {
+                Object.assign(this, data);
+
+                resolve(this);
+            });
+        });
+    }
+
+    remove () {
+        const path = '';
+
+        return new Promise(resolve => {
+            remove(this.name, path).then(result => {
+                resolve(result);
+            });
         });
     }
 

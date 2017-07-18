@@ -11,7 +11,7 @@ export function getData (path = '') {
     });
 }
 
-export function save (path, data) {
+export function saveData (path, data) {
     return new Promise(resolve => {
         initAuth().then(userId => {
             firebase.database().ref(`users/${userId}/${path}`).set(data);
@@ -20,3 +20,11 @@ export function save (path, data) {
     });
 }
 
+export function removeData (key, path) {
+    return new Promise(resolve => {
+        initAuth().then(userId => {
+            firebase.database().ref(`users/${userId}/${path}`).child(key).remove();
+            resolve(true);
+        });
+    });
+}

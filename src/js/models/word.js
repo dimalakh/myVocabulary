@@ -1,4 +1,4 @@
-import { save } from '../helpers/firebase.service.js';
+import { saveData, removeData } from '../helpers/firebase.service.js';
 
 export class Word {
     constructor (word, translation) {
@@ -13,7 +13,18 @@ export class Word {
         const path = `${lang}/storage/${this.name}`;
 
         return new Promise(resolve => {
-            save(path, this).then(result => {
+            saveData(path, this).then(result => {
+                resolve(result);
+            });
+        });
+    }
+
+    remove (lang) {
+        const path = `${lang}/storage`;
+
+        return new Promise(resolve => {
+            removeData(this.name, path).then(result => {
+                console.log(result);
                 resolve(result);
             });
         });

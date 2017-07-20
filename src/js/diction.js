@@ -1,22 +1,15 @@
+import { setLocalData } from './helpers/localstorage.service.js';
 import { goToLearn } from './helpers/navigation.js';
 import { Language } from './models/language.js';
 import { Word } from './models/word.js';
 
 function init () {
     const learnBtn = document.querySelector('#learn');
-    const tbody = document.querySelector('tbody');
 
     const lang = new Language('English');
 
     lang.load().then(data => {
-        Object.keys(data.storage).forEach(key => {
-            const word = data.storage[key];
-
-            tbody.innerHTML += htmlField(word.name, word.translation);
-            const field = document.querySelector(`i[data-name='${word.name}']`);
-
-            field.addEventListener('click', remove);
-        });
+        render(data);
     });
 
     learnBtn.addEventListener('click', goToLearn);
@@ -32,10 +25,23 @@ function htmlField (name, translation) {
                     <td>${name}</td>
                     <td>${translation}</td>
                     <td width="50">
-                        <i class="remove icon" data-name='${name}'></i>
+                        <i class="remove icon delete" data-name='${name}'></i>
                     </td>
             </tr>`
     );
+}
+
+function render (data) {
+    const tbody = document.querySelector('tbody');
+
+    Object.keys(data.storage).forEach(key => {
+        const word = data.storage[key];
+
+        tbody.innerHTML += htmlField(word.name, word.translation);
+        const field = document.querySelector(`i[data-name='${word.name}']`);
+
+        field.addEventListener('click', remove);
+    });
 }
 
 function remove () {

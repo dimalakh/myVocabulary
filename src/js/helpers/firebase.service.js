@@ -20,6 +20,15 @@ export function saveData (path, data) {
     });
 }
 
+export function updateData (path, data) {
+    return new Promise(resolve => {
+        initAuth().then(userId => {
+            firebase.database().ref(`users/${userId}/${path}`).update(data);
+            resolve(true);
+        });
+    });
+}
+
 export function removeData (key, path) {
     return new Promise(resolve => {
         initAuth().then(userId => {

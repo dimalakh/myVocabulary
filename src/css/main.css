@@ -10,20 +10,27 @@ body {
 .hidden {
   display: none;
 }
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
 
 /* POP-UP START */
   .pop-up {
     padding-top: 15px;
     padding-bottom: 15px;
   }
+  
   .pop-up .header {
     margin-bottom: 10px;
   }
-  .pop-up .label {
+
+  .label {
     cursor: pointer;
     opacity: .3;
   }
-  .pop-up .label.active {
+
+  .label.active {
     opacity: 1;
   }
   .pop-up .add-lang {
@@ -37,7 +44,7 @@ body {
   .pop-up .input:first-child {
     margin: 0 0 10px 0;
   }
-  .pop-up #ok, .pop-up #error {
+   #ok, #error {
     float: right;
     height:  36px;
     display: none;
@@ -45,7 +52,7 @@ body {
     justify-content: center;
   }
 
-  .pop-up #ok.active, .pop-up #error.active {
+  #ok.active,  #error.active {
     display: flex;
   }
 /* POP-UP END */
@@ -73,7 +80,8 @@ body {
 
 /* MAIN-PAGE START */
 header {
-  margin: 20px 0 0 0;
+  float: left;
+  margin: 20px 0 20px 0;
 }
 .form-outer {
   float: left;
@@ -90,6 +98,10 @@ header {
 
 .delete:hover {
   color: red;
+}
+
+.table.main-table {
+  margin: 5px 0 0 0;
 }
 
 

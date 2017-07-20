@@ -4,7 +4,7 @@ import { getData } from './helpers/firebase.service.js';
 function init () {
     const input = document.querySelector('#language');
     const addBtn = document.querySelector('button');
-    const indicator = document.querySelector('#indictor');
+    const okIndicator = document.querySelector('#ok');
     const tbody = document.querySelector('tbody');
 
     addBtn.addEventListener('click', addLanguage);
@@ -16,16 +16,18 @@ function init () {
 
         language.create().then(result => {
             if (result === true) {
-                indicator.innerHTML = 'Ok';
-                tbody.innerHTML += `<tr>
-                    <td width="50">${language.name}</td>
-                    <td>Language</th>
-                    <td width="50">
-                        <i class="remove icon" data-name='${language.name}'></i>
-                    </td>
-                </tr>`;
+                tbody.innerHTML += htmlField(language.name);
+                okIndicator.classList.add('active');
+
+                const field = document.querySelector(`i[data-name='${language.name}']`);
+
+                field.addEventListener('click', remove);
+
+                setTimeout(() => {
+                    okIndicator.classList.remove('active');
+                }, 1000);
             } else {
-                indicator.innerHTML = 'Error, min length 1 symbol';
+                okIndicator.innerHTML = 'Error, min length 1 symbol';
             }
         });
     }
@@ -45,15 +47,23 @@ function init () {
 
     function render () {
         getLanguageNames().then(languages => {
-            languages.forEach(lang => {
-                tbody.innerHTML += `<tr>
-                    <td width="50">${lang}</td>
-                    <td>Language</td>
-                    <td width="50">
-                        <i class="remove icon" data-name='${lang}'></i>
-                    </td>
-                </tr>`;
+            tbody.innerHTML = '';
+            languages.forEach((lang, index) => {
+                tbody.innerHTML += htmlField(lang);
+
+                const field = document.querySelector(`i[data-name='${lang}']`);
+
+                field.addEventListener('click', remove);
             });
+        });
+    }
+
+    function remove() {
+        const name = this.getAttribute('data-name');
+        const language = new Language(name);
+        
+        language.remove().then(()=> {
+            render();
         });
     }
 
@@ -62,3 +72,15 @@ function init () {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+function htmlField(name) {
+    return (
+        `<tr>
+            <td width="50"></td>
+            <td>${name}</th>
+            <td width="50">
+                <i class="remove icon delete" data-name='${name}'></i>
+            </td>
+        </tr>`
+    )
+}

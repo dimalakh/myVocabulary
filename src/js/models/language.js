@@ -1,4 +1,5 @@
-import { save, remove, getData } from '../helpers/firebase.service.js';
+import { saveData, removeData, getData, updateData } from '../helpers/firebase.service.js';
+import { setLocalData, removeLocalData } from '../helpers/localstorage.service.js';
 
 export class Language {
     constructor (name) {
@@ -13,7 +14,8 @@ export class Language {
             const path = `${this.name}`;
 
             if (this.name.length >= 1) {
-                save(path, this).then(result => {
+                setLocalData(this);
+                saveData(path, this).then(result => {
                     resolve(result);
                 });
             } else {
@@ -34,11 +36,24 @@ export class Language {
         });
     }
 
+    update (data) {
+        const path = `${this.name}`;
+
+        return new Promise(resolve => {
+            updateData(path, data).then(data => {
+                Object.assign(this, data);
+
+                resolve(this);
+            });
+        });
+    }
+
     remove () {
         const path = '';
 
         return new Promise(resolve => {
-            remove(this.name, path).then(result => {
+            removeLocalData(this.name);
+            removeData(this.name, path).then(result => {
                 resolve(result);
             });
         });

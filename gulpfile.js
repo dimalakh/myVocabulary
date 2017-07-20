@@ -5,7 +5,7 @@ const browserify = require('gulp-browserify');
 gulp.task('babel', () => {
     return gulp.src('src/js/**/*.js')
         .pipe(babel({
-            presets: ['es2015', 'es2017']
+            presets: ['es2015']
         }))
         .pipe(gulp.dest('dist/temp'));
 });

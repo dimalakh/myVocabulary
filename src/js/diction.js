@@ -1,15 +1,22 @@
-import { setLocalData } from './helpers/localstorage.service.js';
+import { getLocalData, setLocalData } from './helpers/localstorage.service.js';
 import { goToLearn } from './helpers/navigation.js';
 import { Language } from './models/language.js';
 import { Word } from './models/word.js';
 
 function init () {
     const learnBtn = document.querySelector('#learn');
+    
+    getLocalData()
+    .then(data => {
+        Object.keys(data).forEach(lang => {
+            if (data[lang].active === true) {
+                const language = new Language(lang);
 
-    const lang = new Language('English');
-
-    lang.load().then(data => {
-        render(data);
+                language.load().then(data => {
+                    render(data);
+                });
+            }
+        })
     });
 
     learnBtn.addEventListener('click', goToLearn);
@@ -47,7 +54,7 @@ function render (data) {
 function remove () {
     const name = this.getAttribute('data-name');
     const word = new Word(name);
-
+    
     word.remove('English');
 }
 

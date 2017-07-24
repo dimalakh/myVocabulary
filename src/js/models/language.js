@@ -4,6 +4,7 @@ import { setLocalData, removeLocalData } from '../helpers/localstorage.service.j
 export class Language {
     constructor (name) {
         this.name = name;
+        this.time = Date.now();
         this.active = false;
         this.flag = name + '.png';
         this.storage = {};
@@ -59,7 +60,7 @@ export class Language {
         });
     }
 
-    addWord (word) {
-        this.storage.push(word);
+    changeActiveSatus(status) {
+        this.active = status;
     }
 }

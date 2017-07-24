@@ -1,4 +1,5 @@
 import { saveData, removeData } from '../helpers/firebase.service.js';
+import { setLocalData } from '../helpers/localstorage.service.js';
 
 export class Word {
     constructor (word, translation) {
@@ -16,6 +17,8 @@ export class Word {
             saveData(path, this).then(result => {
                 resolve(result);
             });
+
+            setLocalData(this, lang);
         });
     }
 
@@ -24,7 +27,6 @@ export class Word {
 
         return new Promise(resolve => {
             removeData(this.name, path).then(result => {
-                console.log(result);
                 resolve(result);
             });
         });

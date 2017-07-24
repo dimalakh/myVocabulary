@@ -1,5 +1,5 @@
 import { goToDiction, goToAddLang } from './helpers/navigation.js';
-import { getLocalData } from './helpers/localstorage.service.js';
+import { getLocalData, setLocalData } from './helpers/localstorage.service.js';
 import { Word } from './models/word.js';
 import { Language } from './models/language.js';
 
@@ -21,7 +21,6 @@ function init () {
 
         Object.keys(data).forEach(lang => {
             const elem = document.createElement("div")
-            console.log(data[lang]);
             elem.innerHTML = lang;
             elem.classList.add('ui', 'red', 'horizontal', 'label');
 
@@ -40,8 +39,14 @@ function init () {
         const language = new Language(langName);
 
         languages.forEach(lang => {
+            const langObj = new Language(lang.innerHTML)
+            langObj.changeActiveSatus(false);
+            setLocalData(langObj);
             lang.classList.remove('active');
         });
+        // setLocalData({active: true}, language.name);
+        language.changeActiveSatus(true);
+        setLocalData(language);
         language.update({ active: true });
         this.classList.add('active');
     }

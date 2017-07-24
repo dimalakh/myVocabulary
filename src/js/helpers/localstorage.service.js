@@ -6,24 +6,32 @@ function getLocalData(name) {
     });
 }
 
-function setLocalData(data, parent) {
+function setLocalData(field, parent) {
     return new Promise (resolve => {
-
-        if (parent) {
-            parent.storage = data;
-            data = parent;
-        }
-
-        const nodeName = data.name;
+        
+        const nodeName = field.name;
         const newObj = {};
 
-        newObj[nodeName] = data;
 
-       chrome.storage.local.set(newObj, () => {
-            resolve(true);
-        }); 
+        if (parent) {
+            getLocalData(parent)
+            .then(data => {
+                data[parent].storage[nodeName] = field 
+                chrome.storage.local.set(data, () => {
+                    resolve(true);
+                }); 
+            });
+        } else {
+            newObj[nodeName] = field;
+
+            chrome.storage.local.set(newObj, () => {
+                resolve(true);
+            }); 
+        }
     });
 }
+
+
 
 function removeLocalData(key) {
     return new Promise(resolve => {

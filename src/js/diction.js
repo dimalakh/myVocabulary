@@ -1,11 +1,12 @@
-import { getLocalData, setLocalData } from './helpers/localstorage.service.js';
+import { getLocalData, compareStorages } from './helpers/localstorage.service.js';
 import { goToLearn } from './helpers/navigation.js';
 import { Language } from './models/language.js';
 import { Word } from './models/word.js';
 
 function init () {
     const learnBtn = document.querySelector('#learn');
-    
+    compareStorages();
+
     getLocalData()
     .then(data => {
         Object.keys(data).forEach(lang => {

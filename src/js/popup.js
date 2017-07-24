@@ -1,5 +1,5 @@
 import { goToDiction, goToAddLang } from './helpers/navigation.js';
-import { getLocalData, setLocalData } from './helpers/localstorage.service.js';
+import { getLocalData, setLocalData, compareStorages } from './helpers/localstorage.service.js';
 import { Word } from './models/word.js';
 import { Language } from './models/language.js';
 
@@ -15,6 +15,8 @@ function init () {
     addLangBtn.addEventListener('click', goToAddLang);
     dictionBtn.addEventListener('click', goToDiction);
     addWord.addEventListener('click', addWordToDictionary);
+
+    compareStorages();
 
     getLocalData().then(data => {
         const header = document.querySelector('.header');
@@ -39,12 +41,13 @@ function init () {
         const language = new Language(langName);
 
         languages.forEach(lang => {
-            const langObj = new Language(lang.innerHTML)
+            const langObj = new Language(lang.innerHTML);
             langObj.changeActiveSatus(false);
+            langObj.update({ active: false });
             setLocalData(langObj);
             lang.classList.remove('active');
         });
-        // setLocalData({active: true}, language.name);
+
         language.changeActiveSatus(true);
         setLocalData(language);
         language.update({ active: true });

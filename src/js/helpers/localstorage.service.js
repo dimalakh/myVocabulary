@@ -1,4 +1,6 @@
-function getLocalData(name) {
+import { getData } from './firebase.service.js';
+
+function getLocalData () {
     return new Promise(resolve => {
         chrome.storage.local.get(data => {
             resolve(data);
@@ -6,9 +8,8 @@ function getLocalData(name) {
     });
 }
 
-function setLocalData(field, parent) {
-    return new Promise (resolve => {
-        
+function setLocalData (field, parent) {
+    return new Promise(resolve => {
         const nodeName = field.name;
         const newObj = {};
 
@@ -16,30 +17,47 @@ function setLocalData(field, parent) {
         if (parent) {
             getLocalData(parent)
             .then(data => {
-                data[parent].storage[nodeName] = field 
+                data[parent].storage[nodeName] = field;
                 chrome.storage.local.set(data, () => {
                     resolve(true);
-                }); 
+                });
             });
         } else {
             newObj[nodeName] = field;
 
             chrome.storage.local.set(newObj, () => {
                 resolve(true);
-            }); 
+            });
         }
     });
 }
 
-
-
-function removeLocalData(key) {
+function removeLocalData (key) {
     return new Promise(resolve => {
-        chrome.storage.local.remove(key, (result) => {
+        chrome.storage.local.remove(key, result => {
             resolve(result);
         });
     });
 }
 
-export { getLocalData, setLocalData, removeLocalData };
+function compareStorages () {
+    return new Promise(resolve => {
+        getLocalData().then(localData => {
+            getData().then(remoteData => {
+                const localJSON = JSON.stringify(localData);
+                const remoteJSON = JSON.stringify(remoteData);
+                
+                if (localJSON === remoteJSON) {
+                    resolve(true);
+                } else {
+                    chrome.storage.local.set(remoteData, () => {
+                        resolve(false);
+                    });
+                }
+            });
+        });
+    });
+}
+
+export { getLocalData, setLocalData, removeLocalData, compareStorages };
 

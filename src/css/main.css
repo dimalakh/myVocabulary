@@ -23,6 +23,9 @@ body {
   
   .pop-up .header {
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 
   .label {
@@ -79,7 +82,7 @@ body {
 /* LEARN-PAGE END */
 
 /* MAIN-PAGE START */
-header {
+header.ui.container.header {
   float: left;
   margin: 20px 0 20px 0;
 }

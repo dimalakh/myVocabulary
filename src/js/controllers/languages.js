@@ -28,7 +28,7 @@ export function addLanguage () {
             okIndicator.classList.add('active');
 
             const field = document.querySelector(`i[data-name='${language.name}']`);
-            console.log(field);
+
             field.addEventListener('click', remove);
 
             setTimeout(() => {

@@ -1,9 +1,9 @@
 import { StorageService } from './helpers/navigation.js';
 
-function init() {
+function init () {
     displayWord();
     chrome.runtime.getBackgroundPage(function(bg) {
-         if (bg.entryToLoad) loadEntry(bg.entryToLoad);
+        if (bg.entryToLoad) loadEntry(bg.entryToLoad);
     });
 }
 

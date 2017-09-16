@@ -1,5 +1,6 @@
 import { saveData, removeData } from '../helpers/firebase.service.js';
 import { setLocalData } from '../helpers/localstorage.service.js';
+import { Language } from './language.js';
 
 export class Word {
     constructor (word, translation) {
@@ -14,10 +15,10 @@ export class Word {
         const path = `${lang}/storage/${this.name}`;
 
         return new Promise(resolve => {
+            
             saveData(path, this).then(result => {
                 resolve(result);
             });
-
             setLocalData(this, lang);
         });
     }
@@ -26,8 +27,20 @@ export class Word {
         const path = `${lang}/storage`;
 
         return new Promise(resolve => {
-            removeData(this.name, path).then(result => {
-                resolve(result);
+            chrome.storage.local.get(lang, data => {
+                const tempLang = data[lang];
+                const word = this.name;
+                const laguage = new Language(lang);
+
+                delete tempLang.storage[word];
+
+                Object.assign(laguage, tempLang);
+
+                setLocalData(laguage);
+
+                removeData(this.name, path).then(result => {
+                    resolve(result);
+                });
             });
         });
     }

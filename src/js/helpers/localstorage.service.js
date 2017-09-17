@@ -1,35 +1,37 @@
 import { getData } from './firebase.service.js';
 
 function getLocalData () {
-    return new Promise(resolve => {
-        chrome.storage.local.get(data => {
-            resolve(data);
-        });
+  return new Promise(resolve => {
+    // eslint-disable-next-line no-undef
+    chrome.storage.local.get(data => {
+      resolve(data);
     });
+  });
 }
 
 function setLocalData (field, parent) {
-    return new Promise(resolve => {
-        const nodeName = field.name;
-        const newObj = {};
+  return new Promise(resolve => {
+    const nodeName = field.name;
+    const newObj = {};
 
+    if (parent) {
+      getLocalData(parent)
+      .then(data => {
+        data[parent].storage[nodeName] = field;
+        // eslint-disable-next-line no-undef
+        chrome.storage.local.set(data, () => {
+          resolve(true);
+        });
+      });
+    } else {
+      newObj[nodeName] = field;
 
-        if (parent) {
-            getLocalData(parent)
-            .then(data => {
-                data[parent].storage[nodeName] = field;
-                chrome.storage.local.set(data, () => {
-                    resolve(true);
-                });
-            });
-        } else {
-            newObj[nodeName] = field;
-
-            chrome.storage.local.set(newObj, () => {
-                resolve(true);
-            });
-        }
-    });
+      // eslint-disable-next-line no-undef
+      chrome.storage.local.set(newObj, () => {
+        resolve(true);
+      });
+    }
+  });
 }
 
 function removeLocalData (key) {

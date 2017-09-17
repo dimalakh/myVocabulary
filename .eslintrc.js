@@ -8,6 +8,7 @@ module.exports = {
     // ... 
   },
   rules: {
-    'curly': [2, 'all'] 
+    'curly': [2, 'all'],
+    'indent': ['error', 2]
   }
 }

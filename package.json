@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
+    "lint": "eslint ./src/**/*.js",
     "browserify": "browserify dist/app.js -o dist/bundle.js",
     "start": "http-server"
   },

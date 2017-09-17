@@ -2,65 +2,63 @@ import { saveData, removeData, getData, updateData } from '../helpers/firebase.s
 import { setLocalData, removeLocalData } from '../helpers/localstorage.service.js';
 
 export class Language {
-    constructor (name) {
-        this.name = name;
-        this.time = Date.now();
-        this.active = false;
-        this.flag = name + '.png';
-        this.storage = {};
-    }
+  constructor (name) {
+    this.name = name;
+    this.time = Date.now();
+    this.active = false;
+    this.flag = name + '.png';
+    this.storage = {};
+  }
 
-    create () {
-        return new Promise(resolve => {
-            const path = `${this.name}`;
+  create () {
+    return new Promise(resolve => {
+      const path = `${this.name}`;
 
-            if (this.name.length >= 1) {
-                setLocalData(this);
-                saveData(path, this).then(result => {
-                    resolve(result);
-                });
-            } else {
-                resolve(false);
-            }
+      if (this.name.length >= 1) {
+        setLocalData(this);
+        saveData(path, this).then(result => {
+          resolve(result);
         });
-    }
+      } else {
+        resolve(false);
+      }
+    });
+  }
 
-    load () {
-        const path = `${this.name}`;
+  load () {
+    const path = `${this.name}`;
 
-        return new Promise(resolve => {
-            getData(path).then(data => {
-                Object.assign(this, data);
+    return new Promise(resolve => {
+      getData(path).then(data => {
+        Object.assign(this, data);
+        resolve(this);
+      });
+    });
+  }
 
-                resolve(this);
-            });
-        });
-    }
+  update (data) {
+    const path = `${this.name}`;
 
-    update (data) {
-        const path = `${this.name}`;
+    return new Promise(resolve => {
+      updateData(path, data).then(data => {
+        Object.assign(this, data);
+        resolve(this);
+      });
+    });
+  }
 
-        return new Promise(resolve => {
-            updateData(path, data).then(data => {
-                Object.assign(this, data);
+  remove () {
+    const path = '';
 
-                resolve(this);
-            });
-        });
-    }
+    return new Promise(resolve => {
+      removeLocalData(this.name);
+      removeData(this.name, path).then(result => {
+        resolve(result);
+      });
+    });
+  }
 
-    remove () {
-        const path = '';
-
-        return new Promise(resolve => {
-            removeLocalData(this.name);
-            removeData(this.name, path).then(result => {
-                resolve(result);
-            });
-        });
-    }
-
-    changeActiveSatus(status) {
-        this.active = status;
-    }
+  changeActiveSatus (status) {
+    this.active = status;
+  }
 }

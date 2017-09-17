@@ -1,15 +1,16 @@
 import { render, addLanguage } from './controllers/languages.js';
 
 function init () {
-    const addBtn = document.querySelector('button');
+  const addBtn = document.querySelector('button');
 
-    render();
+  addBtn.addEventListener('click', addLanguage);
 
-    chrome.storage.onChanged.addListener(render);
-    addBtn.addEventListener('click', addLanguage);
+  render();
 
-    // eslint-disable-next-line no-undef
-    chrome.runtime.getBackgroundPage(() => {});
+  /* eslint-disable no-undef */
+  chrome.storage.onChanged.addListener(render);
+  chrome.runtime.getBackgroundPage(() => {});
+  /* eslint-enable no-undef */
 }
 
 document.addEventListener('DOMContentLoaded', init);

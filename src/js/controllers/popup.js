@@ -13,7 +13,7 @@ export function render () {
 
 export function addToDictionary () {
   const wordInput = document.querySelector('#word');
-  const translationInput = document.querySelector('#translation')
+  const translationInput = document.querySelector('#translation');
   const errorIndicator = document.querySelector('#error');
   const okIndicator = document.querySelector('#ok');
   const activeLangName = document.querySelector('.active').innerHTML;
@@ -22,6 +22,8 @@ export function addToDictionary () {
   word.create(activeLangName).then(result => {
     if (result === true) {
       okIndicator.classList.add('active');
+      wordInput.value = '';
+      translationInput.value = '';
     }
 
     if (result === false) {

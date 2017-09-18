@@ -6,11 +6,28 @@ export function langThumbler (data) {
 
   header.innerHTML = '';
 
-  Object.keys(data).forEach(lang => {
+  Object.keys(data).forEach((lang, index) => {
     const elem = document.createElement('div');
 
     elem.innerHTML = lang;
-    elem.classList.add('ui', 'red', 'horizontal', 'label');
+    elem.classList.add('ui', 'horizontal', 'label');
+
+    /* eslint-disable */
+    switch (index) {
+      case 0: 
+        elem.classList.add('blue');
+        break;
+      case 1: 
+        elem.classList.add('olive');
+        break;
+      case 2: 
+        elem.classList.add('pink');
+        break;
+      default:
+        elem.classList.add('olive');
+        break;
+    }
+    /* eslint-disable */
 
     if (data[lang].active === true) {
       elem.classList.add('active');

@@ -12,6 +12,8 @@ export function render () {
     Object.keys(data).forEach(lang => {
       if (data[lang].active === true) {
         const language = new Language(lang);
+        
+        spinner();
 
         language.load().then(langData => {
           wordList(langData);
@@ -25,6 +27,11 @@ export function render () {
 
 function wordList (data) {
   const tbody = document.querySelector('tbody');
+  const table = document.querySelector('table');
+  const spinner = document.querySelector('.spinner-wrap');
+
+  spinner.style.display = 'none';
+  table.style.opacity = 1;
   tbody.innerHTML = '';
 
   Object.keys(data.storage).forEach((key, index) => {
@@ -36,6 +43,14 @@ function wordList (data) {
 
     field.addEventListener('click', removeWord);
   });
+}
+
+function spinner () {
+  const table = document.querySelector('table');
+  const spinner = document.querySelector('.spinner-wrap');
+
+  table.style.opacity = 0;
+  spinner.style.display = 'flex';
 }
 
 function removeWord () {

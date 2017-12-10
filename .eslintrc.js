@@ -1,14 +1,14 @@
 module.exports = {
-  extends: [
-    '@eleks/eleks',
-  ],
+  extends: [],
  
   // project specific configurations 
   environment: {
     // ... 
   },
+  parserOptions: {
+    ecmaVersion: 6
+  },
   rules: {
-    'curly': [2, 'all'],
     'indent': ['error', 2]
   }
 }

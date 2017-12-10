@@ -1,14 +1,14 @@
 module.exports = {
-  extends: [],
- 
-  // project specific configurations 
+  extends: [
+    'fbjs'
+  ],
   environment: {
-    // ... 
   },
   parserOptions: {
     ecmaVersion: 6
   },
   rules: {
+    'semi': ["error", "never"],
     'indent': ['error', 2]
   }
 }

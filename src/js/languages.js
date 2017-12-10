@@ -1,6 +1,6 @@
 import { render, addLanguage } from './controllers/languages.js';
 
-function init () {
+function init() {
   const addBtn = document.querySelector('button');
 
   addBtn.addEventListener('click', addLanguage);

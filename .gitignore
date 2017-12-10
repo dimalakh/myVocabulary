@@ -1,11 +1,3 @@
 /node_modules
 /dist
 /src/manifest.json
-/src/js/helpers/config.js
-<<<<<<< HEAD
-/dist
-=======
-/js
-package.json
-gulpfile.js
->>>>>>> fc7024e6d7d8159400a6fd6ca630c7677fd4283e

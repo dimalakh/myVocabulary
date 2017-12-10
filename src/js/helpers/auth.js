@@ -1,7 +1,13 @@
-import { config } from './config.js';
-import firebase from 'firebase';
+require('dotenv').config()
+import firebase from 'firebase'
 
-firebase.initializeApp(config);
+const config = {
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL
+}
+
+firebase.initializeApp(config)
 
 export function initAuth () {
   return new Promise(resolve => {

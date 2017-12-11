@@ -1,5 +1,5 @@
-import { saveData, removeData, getData, updateData } from '../helpers/firebase.service.js';
-import { setLocalData, removeLocalData } from '../helpers/localstorage.service.js';
+import { saveData, removeData, getData, updateData } from '../services/firebase'
+import { setLocalData, removeLocalData } from '../services/local'
 
 export class Language {
   constructor (name) {

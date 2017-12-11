@@ -1,4 +1,4 @@
-import { setLocalData } from '../helpers/localstorage.service.js';
+import { setLocalData } from '../services/local'
 import { Language } from '../models/language.js';
 
 export function langThumbler (data) {

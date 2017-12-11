@@ -1,4 +1,4 @@
-import { getData } from './firebase.service.js';
+import { getData } from './firebase'
 
 function getLocalData () {
   return new Promise(resolve => {

@@ -1,5 +1,5 @@
 import { htmlTableField } from '../helpers/ui-elements.js';
-import { getData } from '../helpers/firebase.service.js';
+import { getData } from '../services/firebase'
 import { Language } from '../models/language.js';
 
 export function render () {

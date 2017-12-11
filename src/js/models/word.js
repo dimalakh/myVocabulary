@@ -1,5 +1,5 @@
-import { saveData, removeData } from '../helpers/firebase.service.js';
-import { setLocalData } from '../helpers/localstorage.service.js';
+import { saveData, removeData } from '../services/firebase'
+import { setLocalData } from '../services/local'
 import { Language } from './language.js';
 
 export class Word {

@@ -1,4 +1,4 @@
-import { getLocalData, compareStorages } from '../helpers/localstorage.service.js';
+import { getLocalData, compareStorages } from '../services/local'
 import { htmlTableField } from '../helpers/ui-elements.js';
 import { langThumbler } from './shared.js';
 import { Word } from '../models/word.js';

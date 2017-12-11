@@ -1,46 +1,21 @@
 import { firebaseGet } from './firebase'
 
-function getLocalData () {
+const requestBuilder = (type, callback) => {
   return new Promise(resolve => {
     // eslint-disable-next-line no-undef
-    chrome.storage.local.get(data => {
-      resolve(data);
-    });
-  });
+    chrome.storage.local[type](data => callback(data, resolve))
+  })
 }
 
-function setLocalData (field, parent) {
-  return new Promise(resolve => {
-    const nodeName = field.name;
-    const newObj = {};
+export const getLocalData = () => 
+  requestBuilder('get', (data, resolve) => resolve(data))
 
-    if (parent) {
-      getLocalData(parent)
-      .then(data => {
-        data[parent].storage[nodeName] = field;
-        // eslint-disable-next-line no-undef
-        chrome.storage.local.set(data, () => {
-          resolve(true);
-        });
-      });
-    } else {
-      newObj[nodeName] = field;
+export const setLocalData = field => 
+  requestBuilder('set', (field, resolve) => resolve(true))
 
-      // eslint-disable-next-line no-undef
-      chrome.storage.local.set(newObj, () => {
-        resolve(true);
-      });
-    }
-  });
-}
+export const removeLocalData = field =>
+  requestBuilder('remove', (field, resolve) => resolve(true))
 
-function removeLocalData (key) {
-    return new Promise(resolve => {
-        chrome.storage.local.remove(key, result => {
-            resolve(result);
-        });
-    });
-}
 
 function compareStorages () {
     return new Promise(resolve => {
@@ -61,5 +36,5 @@ function compareStorages () {
     });
 }
 
-export { getLocalData, setLocalData, removeLocalData, compareStorages };
+export { compareStorages };
 

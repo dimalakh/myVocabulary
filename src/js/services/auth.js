@@ -3,7 +3,7 @@ import firebase from 'firebase'
 
 firebase.initializeApp(config)
 
-export function initAuth () {
+function authentificate() {
   return new Promise(resolve => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -50,4 +50,4 @@ function startAuth (interactive) {
   });
 }
 
-export default firebase;
+export default authentificate

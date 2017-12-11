@@ -1,4 +1,4 @@
-import { saveData, removeData } from '../services/firebase'
+import { firebaseSave, firebaseRemove } from '../services/firebase'
 import { setLocalData } from '../services/local'
 import { Language } from './language.js';
 
@@ -15,7 +15,7 @@ export class Word {
     const path = `${lang}/storage/${this.name}`;
 
     return new Promise(resolve => {
-      saveData(path, this).then(result => {
+      firebaseSave(path, this).then(result => {
         resolve(result);
       });
 
@@ -37,7 +37,7 @@ export class Word {
         Object.assign(laguage, tempLang);
         setLocalData(laguage);
 
-        removeData(this.name, path).then(result => {
+        firebaseRemove(this.name, path).then(result => {
           resolve(result);
         });
       });

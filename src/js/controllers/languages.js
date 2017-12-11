@@ -1,5 +1,5 @@
 import { htmlTableField } from '../helpers/ui-elements.js';
-import { getData } from '../services/firebase'
+import { firebaseGet } from '../services/firebase'
 import { Language } from '../models/language.js';
 
 export function render () {
@@ -43,7 +43,7 @@ export function addLanguage () {
 
 function getLanguageNames () {
   return new Promise(resolve => {
-    getData().then(data => {
+    firebaseGet().then(data => {
       const tempArr = [];
 
       Object.keys(data).forEach(key => {

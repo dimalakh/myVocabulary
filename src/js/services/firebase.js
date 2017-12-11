@@ -1,39 +1,36 @@
-import firebase, { initAuth } from './auth.js';
+import authentificate from './auth.js'
+import firebase from 'firebase'
 
-export function getData (path = '') {
-  return new Promise(resolve => {
-    initAuth().then(userId => {
-      firebase.database().ref(`/users/${userId}/${path}`).once('value')
-        .then(data => {
-          resolve(data.val());
-        });
-    });
-  });
+const requestBuilder = func => {
+  return new Promise((resolve, reject) => {
+    authentificate().then(id => func(id, resolve))
+  })
 }
 
-export function saveData (path, data) {
-  return new Promise(resolve => {
-    initAuth().then(userId => {
-      firebase.database().ref(`users/${userId}/${path}`).set(data);
-      resolve(true);
-    });
-  });
-}
+export const firebaseGet = (path = '') => requestBuilder((id, resolve) => {
+  firebase.database()
+  .ref(`/users/${id}/${path}`)
+  .once('value')
+  .then(data => resolve(data.val()))
+})
 
-export function updateData (path, data) {
-  return new Promise(resolve => {
-    initAuth().then(userId => {
-      firebase.database().ref(`users/${userId}/${path}`).update(data);
-      resolve(true);
-    });
-  });
-}
+export const firebaseSave = (path, data) => requestBuilder((id, resolve) => {
+  firebase.database()
+  .ref(`users/${id}/${path}`)
+  .set(data)
+  .then(() => resolve(true))
+})
 
-export function removeData (key, path) {
-  return new Promise(resolve => {
-    initAuth().then(userId => {
-      firebase.database().ref(`users/${userId}/${path}`).child(key).remove();
-      resolve(true);
-    });
-  });
-}
+export const firebaseUpdate = (path, data) => requestBuilder((id, resolve) => {
+  firebase.database()
+  .ref(`users/${id}/${path}`)
+  .update(data)
+  .then(() => resolve(true))
+})
+
+export const firebaseRemove = (key, path) => requestBuilder((id, resolve) => {
+  firebase.database()
+  .ref(`users/${id}/${path}`)
+  .child(key).remove()
+  .then(() => resolve(true))
+})

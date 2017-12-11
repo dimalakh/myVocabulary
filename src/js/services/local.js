@@ -1,4 +1,4 @@
-import { getData } from './firebase'
+import { firebaseGet } from './firebase'
 
 function getLocalData () {
   return new Promise(resolve => {
@@ -45,7 +45,7 @@ function removeLocalData (key) {
 function compareStorages () {
     return new Promise(resolve => {
         getLocalData().then(localData => {
-            getData().then(remoteData => {
+            firebaseGet().then(remoteData => {
                 const localJSON = JSON.stringify(localData);
                 const remoteJSON = JSON.stringify(remoteData);
                 

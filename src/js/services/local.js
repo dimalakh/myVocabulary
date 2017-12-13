@@ -15,26 +15,3 @@ export const setLocalData = field =>
 
 export const removeLocalData = field =>
   requestBuilder('remove', (field, resolve) => resolve(true))
-
-
-function compareStorages () {
-    return new Promise(resolve => {
-        getLocalData().then(localData => {
-            firebaseGet().then(remoteData => {
-                const localJSON = JSON.stringify(localData);
-                const remoteJSON = JSON.stringify(remoteData);
-                
-                if (localJSON === remoteJSON) {
-                    resolve(true);
-                } else {
-                    chrome.storage.local.set(remoteData, () => {
-                        resolve(false);
-                    });
-                }
-            });
-        });
-    });
-}
-
-export { compareStorages };
-

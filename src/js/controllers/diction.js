@@ -1,4 +1,5 @@
-import { getLocalData, compareStorages } from '../services/local'
+import { getLocalData } from '../services/local'
+import { compareStorages } from '../services/firebase'
 import { htmlTableField } from '../helpers/ui-elements.js';
 import { langThumbler } from './shared.js';
 import { Word } from '../models/word.js';

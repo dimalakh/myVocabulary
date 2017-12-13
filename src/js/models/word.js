@@ -18,7 +18,11 @@ export class Word {
       firebaseSave(path, this).then(result => {
         resolve(result);
       });
-
+      const date = {
+        timestamp: +new Date()
+      }
+      firebaseSave('timestamp', date.timestamp);
+      setLocalData(date);
       setLocalData(this, lang);
     });
   }

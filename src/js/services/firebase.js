@@ -1,4 +1,5 @@
-import authentificate from './auth.js'
+import authentificate from './auth'
+import { getLocalData, setLocalData } from './local'
 import firebase from 'firebase'
 
 const requestBuilder = func => {
@@ -34,3 +35,25 @@ export const firebaseRemove = (key, path) => requestBuilder((id, resolve) => {
   .child(key).remove()
   .then(() => resolve(true))
 })
+
+export const compareStorages = () => {
+  return new Promise(resolve => {
+    getLocalData().then(local => {
+      firebaseGet().then(remote => {
+        if (local.timestamp > remote.timestamp) {
+          const data = Object.assign(remote, local)
+
+          return firebaseUpdate('', data)
+          .then(() => resolve(true))
+        }
+        
+        if (local.timestamp < remote.timestamp) {
+          const data = Object.assign(local, remote)
+          
+          return setLocalData(data)
+          .then(() => resolve(true))
+        }
+      })
+    })
+  })
+}

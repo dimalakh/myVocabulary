@@ -3,28 +3,20 @@ import firebase from 'firebase'
 
 firebase.initializeApp(config)
 
-function authentificate() {
-  return new Promise(resolve => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        resolve(user.uid);
+const authentificate = () => new Promise(resolve => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) return resolve(user.uid)
 
-        return;
-      }
+    return signIn()
+  })
+})
 
-      startSignIn();
-    });
-  });
-}
+const signIn = () => {
+  const fireAuth = firebase.auth()
+  
+  if (fireAuth.currentUser) return fireAuth.signOut()
 
-function startSignIn () {
-  /* eslint-disable curly */
-  if (firebase.auth().currentUser) {
-    firebase.auth().signOut();
-  } else {
-    startAuth(true);
-  }
-  /* eslint-enable curly */
+  return startAuth(true)
 }
 
 function startAuth (interactive) {

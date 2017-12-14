@@ -22,8 +22,9 @@ export class Word {
         timestamp: +new Date()
       }
       firebaseSave('timestamp', date.timestamp);
-      setLocalData(date);
       setLocalData(this, lang);
+      console.log('this.', this)
+      console.log('lang', lang)
     });
   }
 

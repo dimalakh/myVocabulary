@@ -1,4 +1,4 @@
-import { setLocalData } from '../services/local'
+import { setLocalData, getLocalData } from '../services/local'
 import { Language } from '../models/language.js';
 
 export function langThumbler (data) {
@@ -40,22 +40,28 @@ export function langThumbler (data) {
 
 function changeLang () {
   const languages = document.querySelectorAll('.label');
-  // eslint-disable-next-line
   const langName = this.innerHTML;
   const language = new Language(langName);
-
+  let langs = {}
   languages.forEach(lang => {
-    const langObj = new Language(lang.innerHTML);
-
+    const name = lang.innerHTML
+    const langObj = new Language(name);
+    
     langObj.changeActiveSatus(false);
-    langObj.update({ active: false });
-    setLocalData(langObj);
+    
+    Object.assign(langs, { [name]: langObj })
+
     lang.classList.remove('active');
   });
 
-  language.changeActiveSatus(true);
-  setLocalData(language);
-  language.update({ active: true });
+  const preparedLocalData = {
+    languages: langs
+  }
+
+  setLocalData(preparedLocalData).then(() => {
+    language.changeActiveSatus(true)
+    language.update()
+  })
   // eslint-disable-next-line
   this.classList.add('active');
 }

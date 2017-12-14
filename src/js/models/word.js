@@ -1,56 +1,57 @@
 import { firebaseSave, firebaseRemove } from '../services/firebase'
 import { setLocalData, removeLocalData } from '../services/local'
-import { Language } from './language.js';
+import { Language } from './language.js'
 
 export class Word {
-  constructor (word, translation) {
-    this.name = word;
-    this.translation = translation;
-    this.tries = 0;
-    this.correctAnswers = 0;
-    this.time = Date.now();
+  constructor(word, translation) {
+    this.name = word
+    this.translation = translation
+    this.tries = 0
+    this.correctAnswers = 0
+    this.time = Date.now()
   }
 
-  create (lang) {
-    const path = `${lang}/storage/${this.name}`;
+  create(lang) {
+    const path = `languages/${lang}/storage/${this.name}`
 
     return new Promise(resolve => {
       firebaseSave(path, this).then(result => {
-        resolve(result);
-      });
+        resolve(result)
+      })
       const date = {
         timestamp: +new Date()
       }
-      const wordPath = {}
-      wordPath[lang] = {
-        storage: this
+      const wordPath = {
+        languages: {
+          [lang]: {
+            storage: this
+          }
+        }
       }
-      firebaseSave('timestamp', date.timestamp);
-      setLocalData(wordPath);
-      console.log('this.', this)
-      console.log('lang', lang)
-    });
+      firebaseSave('timestamp', date.timestamp)
+      setLocalData(wordPath)
+    })
   }
 
-  remove (lang) {
-    const path = `${lang}/storage`;
+  remove(lang) {
+    const path = `languages/${lang}/storage`
 
     return new Promise(resolve => {
       // eslint-disable-next-line no-undef
       chrome.storage.local.get(lang, data => {
-        const tempLang = data[lang];
-        const word = this.name;
-        const laguage = new Language(lang);
+        const tempLang = data[lang]
+        const word = this.name
+        const laguage = new Language(lang)
 
-        delete tempLang.storage[word];
-        Object.assign(laguage, tempLang);
-        setLocalData(laguage);
+        delete tempLang.storage[word]
+        Object.assign(laguage, tempLang)
+        setLocalData(laguage)
         console.log(laguage)
-        removeLocalData(laguage.storage[word]);
+        removeLocalData(laguage.storage[word])
         firebaseRemove(this.name, path).then(result => {
-          resolve(result);
-        });
-      });
-    });
+          resolve(result)
+        })
+      })
+    })
   }
 }

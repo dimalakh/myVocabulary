@@ -41,9 +41,9 @@ export function addLanguage () {
   });
 }
 
-function getLanguageNames () {
+function getLanguageNames() {
   return new Promise(resolve => {
-    firebaseGet().then(data => {
+    firebaseGet('languages').then(data => {
       const tempArr = [];
 
       Object.keys(data).forEach(key => {

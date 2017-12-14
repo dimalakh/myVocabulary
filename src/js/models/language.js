@@ -1,64 +1,89 @@
-import { firebaseSave, firebaseRemove, firebaseGet, firebaseUpdate } from '../services/firebase'
-import { setLocalData, removeLocalData } from '../services/local'
+import { getLocalData, setLocalData, removeLocalData } from '../services/local'
+import { 
+  firebaseSave,
+  firebaseRemove,
+  firebaseGet,
+  firebaseUpdate,
+} from '../services/firebase'
 
 export class Language {
-  constructor (name) {
-    this.name = name;
-    this.time = Date.now();
-    this.active = false;
-    this.flag = name + '.png';
-    this.storage = {};
+  constructor(name) {
+    this.name = name
+    this.time = Date.now()
+    this.active = false
+    this.flag = name + '.png'
+    this.storage = {}
   }
 
-  create () {
+  create() {
     return new Promise(resolve => {
-      const path = `${this.name}`;
+      const name = this.name
+      const path = `languages/${this.name}`
 
       if (this.name.length >= 1) {
-        setLocalData(this);
+        getLocalData().then(localData => {
+          const local = {
+            languages: {
+              ...localData.languages,
+              [name]: this
+            }
+          }
+          setLocalData(local)
+        })
         firebaseSave(path, this).then(result => {
-          resolve(result);
-        });
+          resolve(result)
+        })
       } else {
-        resolve(false);
+        resolve(false)
       }
-    });
+    })
   }
 
-  load () {
-    const path = `${this.name}`;
+  load() {
+    const path = `languages/${this.name}`
 
     return new Promise(resolve => {
       firebaseGet(path).then(data => {
-        Object.assign(this, data);
-        resolve(this);
-      });
-    });
+        Object.assign(this, data)
+        resolve(this)
+      })
+    })
   }
 
-  update (data) {
-    const path = `${this.name}`;
+  update() {
+    const data = this
+    const path = `languages/${this.name}`
+    getLocalData().then(dataLocal => {
+      const localData = {
+        languages: {
+          ...dataLocal.languages,
+          [this.name]: this
+        }
+      }
+      console.log('localdata:', localData)
+      setLocalData(localData)
+    })
 
     return new Promise(resolve => {
       firebaseUpdate(path, data).then(data => {
-        Object.assign(this, data);
-        resolve(this);
-      });
-    });
+        Object.assign(this, data)
+        resolve(this)
+      })
+    })
   }
 
-  remove () {
-    const path = '';
+  remove() {
+    const path = ''
 
     return new Promise(resolve => {
-      removeLocalData(this.name);
+      removeLocalData(this.name)
       firebaseRemove(this.name, path).then(result => {
-        resolve(result);
-      });
-    });
+        resolve(result)
+      })
+    })
   }
 
-  changeActiveSatus (status) {
-    this.active = status;
+  changeActiveSatus(status) {
+    this.active = status
   }
 }

@@ -11,11 +11,11 @@ export const getLocalData = () => new Promise(resolve => {
 })
 
 export const setLocalData = field => {
-  const { name } = field
-  const dataToSave = {}
-  dataToSave[name] = field
+//   const { name } = field
+//   const dataToSave = {}
+//   dataToSave[name] = field
 
-  return requestBuilder('set', dataToSave, resolve => resolve(true))
+  return requestBuilder('set', field, resolve => resolve(true))
 }
 
 export const removeLocalData = field =>

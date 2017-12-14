@@ -8,7 +8,7 @@ export function render () {
   compareStorages();
 
   getLocalData().then(data => {
-    langThumbler(data);
+    langThumbler(data.languages);
   });
 }
 

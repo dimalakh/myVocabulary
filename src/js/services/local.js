@@ -10,7 +10,7 @@ export const getLocalData = () => new Promise(resolve => {
   return chrome.storage.local.get(data => resolve(data))
 })
 
-export const setLocalData = (field, parent) => {
+export const setLocalData = field => {
   const { name } = field
   const dataToSave = {}
   dataToSave[name] = field

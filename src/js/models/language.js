@@ -41,7 +41,7 @@ export class Language {
 
   load() {
     const path = `languages/${this.name}`
-
+    console.log(path)
     return new Promise(resolve => {
       firebaseGet(path).then(data => {
         Object.assign(this, data)
@@ -52,12 +52,18 @@ export class Language {
 
   update() {
     const data = this
+    console.log(this)
     const path = `languages/${this.name}`
     getLocalData().then(dataLocal => {
       const localData = {
         languages: {
           ...dataLocal.languages,
-          [this.name]: this
+          [this.name]: {
+            ...this,
+            storage: {
+              ...dataLocal.languages[this.name].storage
+            }
+          }
         }
       }
       console.log('localdata:', localData)

@@ -1,5 +1,5 @@
 import { firebaseSave, firebaseRemove } from '../services/firebase'
-import { setLocalData, removeLocalData } from '../services/local'
+import { setLocalData, removeLocalData, getLocalData } from '../services/local'
 import { Language } from './language.js'
 
 export class Word {
@@ -18,18 +18,28 @@ export class Word {
       firebaseSave(path, this).then(result => {
         resolve(result)
       })
-      const date = {
-        timestamp: +new Date()
-      }
-      const wordPath = {
-        languages: {
-          [lang]: {
-            storage: this
+      getLocalData().then(data => {
+        const date = {
+          timestamp: +new Date()
+        }
+
+        const wordPath = {
+          ...data,
+          languages: {
+            ...data.languages,
+            [lang]: {
+              ...data.languages[lang],
+              storage: {
+                ...data.languages[lang].storage,
+                [this.name]: this
+              }
+            }
           }
         }
-      }
-      firebaseSave('timestamp', date.timestamp)
-      setLocalData(wordPath)
+
+        firebaseSave('timestamp', date.timestamp)
+        setLocalData(wordPath)
+      })
     })
   }
 

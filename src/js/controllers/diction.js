@@ -10,19 +10,20 @@ export function render () {
 
   getLocalData()
   .then(data => {
-    Object.keys(data).forEach(lang => {
-      if (data[lang].active === true) {
+    Object.keys(data.languages).forEach(lang => {
+      if (data.languages[lang].active === true) {
         const language = new Language(lang);
         
         spinner();
 
         language.load().then(langData => {
+          console.log(langData)
           wordList(langData);
         });
       }
     });
 
-    langThumbler(data);
+    langThumbler(data.languages);
   });
 }
 

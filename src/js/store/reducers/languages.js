@@ -22,7 +22,7 @@ const languages = (state = {}, action) => {
   }
 }
 
-export const activeLanguage = (state = null, action) => {
+export const activeLanguage = (state = 'English', action) => {
   switch (action.type) {
   case SET_ACTIVE_LANGUAGE:
     return action.payload 

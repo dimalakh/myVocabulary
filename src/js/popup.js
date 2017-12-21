@@ -19,11 +19,14 @@ const PopUpComponent = () => {
   const onClickAdd = () => {
     store.dispatch(
       addWord({
-        language: 'English',
+        language: store.getState().activeLanguage,
         key: word.value,
         translation: translation.value
       }
     ))
+  
+    word.value = ''
+    translation.value = ''
   }
 
   const renderLangThumler = (store) => {

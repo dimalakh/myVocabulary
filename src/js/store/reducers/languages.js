@@ -1,4 +1,4 @@
-import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD } from '../actionTypes'
+import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE } from '../actionTypes'
 
 const languages = (state = {}, action) => {
   switch (action.type) {
@@ -17,6 +17,15 @@ const languages = (state = {}, action) => {
         }
       }
     }
+  default:
+    return state
+  }
+}
+
+export const activeLanguage = (state = null, action) => {
+  switch (action.type) {
+  case SET_ACTIVE_LANGUAGE:
+    return action.payload 
   default:
     return state
   }

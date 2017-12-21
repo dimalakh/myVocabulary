@@ -1,17 +1,22 @@
 import { goToDiction, goToAddLang } from './helpers/navigation.js'
-//import { render, addToDictionary } from './controllers/popup.js'
+import { langThumbler } from './controllers/shared'
 import { getLocalData, setLocalData } from './services/local'
 import store from './store'
 import { addLanguage, addWord, loadLanguages } from './store/actions/languages'
 
-const render = () => {
+const PopUpComponent = () => {
   const dictionBtn = document.querySelector('#diction')
   const addLangBtn = document.querySelector('#addLang')
   const addWords = document.querySelector('#addWord')
   const word = document.querySelector('#word')
   const translation = document.querySelector('#translation')
+  const header = document.querySelector('.controls')
   
-  const addTo = () => {
+  getLocalData().then(localStorage => {
+    store.dispatch(loadLanguages(localStorage.languages))
+  })
+
+  const onClickAdd = () => {
     store.dispatch(
       addWord({
         language: 'English',
@@ -20,24 +25,24 @@ const render = () => {
       }
     ))
   }
-  
-  getLocalData().then(localStorage => {
-    store.dispatch(loadLanguages(localStorage.languages))
-  })
+
+  const renderLangThumler = (store) => {
+    langThumbler(store)
+  }
 
   store.subscribe(() => {
     setLocalData(store.getState())
-    console.log(store.getState())
+    renderLangThumler(store)
   })
 
   addLangBtn.addEventListener('click', goToAddLang)
   dictionBtn.addEventListener('click', goToDiction)
-  addWords.addEventListener('click', addTo)
+  addWords.addEventListener('click', onClickAdd)
 
   // eslint-disable-next-line no-undef
   chrome.runtime.getBackgroundPage(() => {})
 }
 
-document.addEventListener('DOMContentLoaded', render)
+document.addEventListener('DOMContentLoaded', PopUpComponent)
 
 

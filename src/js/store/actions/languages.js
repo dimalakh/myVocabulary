@@ -1,4 +1,11 @@
-import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD } from '../actionTypes'
+import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE } from '../actionTypes'
+
+export const setActiveLanguage = language => {
+  return { 
+    type: SET_ACTIVE_LANGUAGE,
+    payload: language
+  } 
+}
 
 export const loadLanguages = languages => {
   return { 

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
-import languages from './languages'
+import languages, { activeLanguage } from './languages'
 
 export default combineReducers({
-  languages
+  languages,
+  activeLanguage
 })

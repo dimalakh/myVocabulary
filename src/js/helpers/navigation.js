@@ -1,20 +1,20 @@
-export function goToDiction () {
+export const goToDiction = () => {
   // eslint-disable-next-line no-undef
   chrome.runtime.sendMessage({
     page: 'diction'
-  });
+  })
 }
 
-export function goToLearn () {
+export const goToLearn = () => {
   // eslint-disable-next-line no-undef
   chrome.runtime.sendMessage({
     page: 'learn'
-  });
+  })
 }
 
-export function goToAddLang () {
+export const goToAddLang = () => {
   // eslint-disable-next-line no-undef
   chrome.runtime.sendMessage({
     page: 'languages'
-  });
+  })
 }

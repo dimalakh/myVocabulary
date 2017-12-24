@@ -1,11 +1,12 @@
-import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE, REMOVE_LANGUAGE, REMOVE_WORD } from '../actionTypes'
-
-export const setActiveLanguage = language => {
-  return { 
-    type: SET_ACTIVE_LANGUAGE,
-    payload: language
-  } 
-}
+import { 
+  LOAD_LANGUAGES, 
+  ADD_LANGUAGE, 
+  SET_ACTIVE_LANGUAGE,
+  REMOVE_LANGUAGE,
+  ADD_WORD,  
+  REMOVE_WORD
+} from '../actionTypes'
+import { getLocalData } from '../../services/local'
 
 export const loadLanguages = languages => {
   return { 
@@ -19,6 +20,13 @@ export const addLanguage = language => {
     type: ADD_LANGUAGE,
     payload: language
   }
+}
+
+export const setActiveLanguage = language => {
+  return { 
+    type: SET_ACTIVE_LANGUAGE,
+    payload: language
+  } 
 }
 
 export const removeLanguage = languageName => {
@@ -43,4 +51,11 @@ export const removeWord = (word, language) => {
       language
     }
   }
+}
+
+export const loadDataToStore = () => dispatch => {
+  getLocalData().then(localStorage => {
+    dispatch(loadLanguages(localStorage.languages))
+    dispatch(setActiveLanguage(localStorage.activeLanguage))
+  })
 }

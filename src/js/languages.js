@@ -1,26 +1,45 @@
-import { htmlTableField } from './helpers/ui-elements.js'
-import { getLocalData, setLocalData } from './services/local'
+import { 
+  addLanguage,
+  loadDataToStore,
+  removeLanguage
+} from './store/actions/languages'
 import store from './store'
-import { addLanguage, loadLanguages, removeLanguage, setActiveLanguage } from './store/actions/languages'
+import { htmlTableField } from './helpers/ui-elements.js'
+import { setLocalData } from './services/local'
 
-function init() {
-  const addBtn = document.querySelector('button')
-  const input = document.querySelector('#language')
+function LanguagesComponent() {
+  store.dispatch(loadDataToStore())
 
-  getLocalData().then(localStorage => {
-    store.dispatch(loadLanguages(localStorage.languages))
-    store.dispatch(setActiveLanguage(localStorage.activeLanguage))
-  })
+  const render = () => {
+    const addBtn = document.querySelector('button')
+    const input = document.querySelector('#language')
+    const tbody = document.querySelector('tbody')
 
-  const onClickAdd = () => {
-    store.dispatch(
-      addLanguage({
+    const languages = store.getState().languages
+    const languagesArr = Object.keys(languages).map(name => languages[name])
+    
+    tbody.innerHTML = ''
+    languagesArr.forEach((lang, index) => {
+      tbody.appendChild(htmlTableField(index + 1, lang.name))
+      const field = document.querySelector(`i[data-name='${lang.name}']`)
+
+      field.addEventListener('click', deleteLanguage)
+    })
+
+    function deleteLanguage() {
+      const name = this.getAttribute('data-name')
+      store.dispatch(removeLanguage(name))
+    }
+    
+    function createLanguage() {
+      store.dispatch(addLanguage({
         name: input.value,
         storage: {}
-      }
-    ))
-  
-    input.value = ''
+      }))
+      input.value = ''
+    }
+
+    addBtn.addEventListener('click', createLanguage)
   }
 
   store.subscribe(() => {
@@ -28,37 +47,10 @@ function init() {
     setLocalData(store.getState())
   })
 
-  const render = () => {
-    const languages = store.getState().languages
-    const languagesArr = Object.keys(languages).map(name => languages[name])
-    const tbody = document.querySelector('tbody')
-  
-    tbody.innerHTML = ''
-    languagesArr.forEach((lang, index) => {
-      tbody.appendChild(htmlTableField(index + 1, lang.name))
-      const field = document.querySelector(`i[data-name='${lang.name}']`)
-
-      field.addEventListener('click', remove)
-    })
-  }
-
-  function remove() {
-    const name = this.getAttribute('data-name')
-    store.dispatch(removeLanguage(name))
-  }
-  
-
-  addBtn.addEventListener('click', onClickAdd)
-
   /* eslint-disable no-undef */
-  chrome.storage.onChanged.addListener(() => {
-    getLocalData().then(localStorage => {
-      store.dispatch(setActiveLanguage(localStorage.activeLanguage))
-      store.dispatch(loadLanguages(localStorage.languages))
-    })
-  })
+  chrome.storage.onChanged.addListener(() => store.dispatch(loadDataToStore()))
   chrome.runtime.getBackgroundPage(() => {})
   /* eslint-enable no-undef */
 }
 
-document.addEventListener('DOMContentLoaded', init)
+document.addEventListener('DOMContentLoaded', LanguagesComponent)

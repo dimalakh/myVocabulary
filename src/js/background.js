@@ -9,5 +9,5 @@ chrome.runtime.onMessage.addListener(message => {
   if (message.page === 'languages') {
     chrome.tabs.create({ url: chrome.extension.getURL('languages.html') });
   }
-});
+})
 /* eslint-enable no-undef */

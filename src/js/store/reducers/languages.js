@@ -1,4 +1,11 @@
-import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE, REMOVE_LANGUAGE, REMOVE_WORD } from '../actionTypes'
+import { 
+  LOAD_LANGUAGES, 
+  ADD_LANGUAGE, 
+  ADD_WORD, 
+  REMOVE_LANGUAGE, 
+  REMOVE_WORD,
+  SET_ACTIVE_LANGUAGE
+} from '../actionTypes'
 
 const languages = (state = {}, action) => {
   switch (action.type) {

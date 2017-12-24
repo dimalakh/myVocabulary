@@ -1,7 +1,8 @@
 import { 
   addLanguage,
   loadDataToStore,
-  removeLanguage
+  removeLanguage,
+  setTimestamp
 } from './store/actions/languages'
 import store from './store'
 import { htmlTableField } from './helpers/ui-elements.js'
@@ -29,6 +30,7 @@ function LanguagesComponent() {
     function deleteLanguage() {
       const name = this.getAttribute('data-name')
       store.dispatch(removeLanguage(name))
+      store.dispatch(setTimestamp())
     }
     
     function createLanguage() {
@@ -36,6 +38,7 @@ function LanguagesComponent() {
         name: input.value,
         storage: {}
       }))
+      store.dispatch(setTimestamp())
       input.value = ''
     }
 

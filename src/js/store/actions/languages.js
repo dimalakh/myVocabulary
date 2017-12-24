@@ -4,9 +4,12 @@ import {
   SET_ACTIVE_LANGUAGE,
   REMOVE_LANGUAGE,
   ADD_WORD,  
-  REMOVE_WORD
+  REMOVE_WORD,
+  LOAD_TIMESTAMP,
+  SET_TIMESTAMP
 } from '../actionTypes'
 import { getLocalData } from '../../services/local'
+import { firebaseGet } from '../../services/firebase'
 
 export const loadLanguages = languages => {
   return { 
@@ -54,8 +57,31 @@ export const removeWord = (word, language) => {
 }
 
 export const loadDataToStore = () => dispatch => {
-  getLocalData().then(localStorage => {
-    dispatch(loadLanguages(localStorage.languages))
-    dispatch(setActiveLanguage(localStorage.activeLanguage))
+  firebaseGet().then(firebaseStorage => {
+    getLocalData().then(localStorage => {
+      if (firebaseStorage.timestamp < localStorage.timestamp) {
+        dispatch(loadLanguages(firebaseStorage.languages))
+        dispatch(setActiveLanguage(firebaseStorage.activeLanguage))
+        dispatch(loadTimestamp(firebaseStorage.timestamp))
+      } else {
+        dispatch(loadLanguages(localStorage.languages))
+        dispatch(setActiveLanguage(localStorage.activeLanguage))
+        dispatch(loadTimestamp(localStorage.timestamp))
+      }
+    })
   })
+}
+
+export const loadTimestamp = (timestamp) => {
+  return {
+    type: LOAD_TIMESTAMP,
+    payload: timestamp
+  }
+}
+
+export const setTimestamp = () => {
+  return {
+    type: SET_TIMESTAMP,
+    payload: +new Date()
+  }
 }

@@ -1,4 +1,4 @@
-import { setActiveLanguage } from '../store/actions/languages'
+import { setActiveLanguage, setTimestamp } from '../store/actions/languages'
 
 export const htmlTableField = (column0 = '', column1 = '', column2 = '') => {
   const field = document.createElement('tr')
@@ -34,6 +34,7 @@ export function langThumbler (store) {
     
     const onLangChange = () => {
       store.dispatch(setActiveLanguage(lang))
+      store.dispatch(setTimestamp())
     }
     
     header.appendChild(elem)

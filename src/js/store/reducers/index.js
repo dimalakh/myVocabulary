@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
-import languages, { activeLanguage } from './languages'
+import languages, { activeLanguage, timestamp } from './languages'
 
 export default combineReducers({
   languages,
-  activeLanguage
+  activeLanguage,
+  timestamp
 })

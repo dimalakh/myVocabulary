@@ -4,7 +4,9 @@ import {
   ADD_WORD, 
   REMOVE_LANGUAGE, 
   REMOVE_WORD,
-  SET_ACTIVE_LANGUAGE
+  SET_ACTIVE_LANGUAGE,
+  LOAD_TIMESTAMP,
+  SET_TIMESTAMP
 } from '../actionTypes'
 
 const languages = (state = {}, action) => {
@@ -57,6 +59,17 @@ const languages = (state = {}, action) => {
 export const activeLanguage = (state = 'English', action) => {
   switch (action.type) {
   case SET_ACTIVE_LANGUAGE:
+    return action.payload 
+  default:
+    return state
+  }
+}
+
+export const timestamp = (state = null, action) => {
+  switch (action.type) {
+  case LOAD_TIMESTAMP:
+    return action.payload
+  case SET_TIMESTAMP:
     return action.payload 
   default:
     return state

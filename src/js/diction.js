@@ -1,7 +1,8 @@
 import store from './store'
 import { langThumbler } from './helpers/ui-elements'
 import { setLocalData } from './services/local'
-import { removeWord, loadDataToStore } from './store/actions/languages'
+import { firebaseSave } from './services/firebase'
+import { removeWord, loadDataToStore, setTimestamp } from './store/actions/languages'
 import { htmlTableField } from './helpers/ui-elements.js'
 
 const DictionComponent = () => {
@@ -39,12 +40,14 @@ const DictionComponent = () => {
       const { activeLanguage } = store.getState()
   
       store.dispatch(removeWord(name, activeLanguage))
+      store.dispatch(setTimestamp())
     }
   }
   
   store.subscribe(() => {
     render()
     setLocalData(store.getState())
+    firebaseSave('', store.getState())
   })
   /* eslint-disable no-undef */
   chrome.storage.onChanged.addListener(() => store.dispatch(loadDataToStore()))

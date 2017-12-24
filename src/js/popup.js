@@ -1,8 +1,9 @@
 import { goToDiction, goToAddLang } from './helpers/navigation.js'
 import { langThumbler } from './helpers/ui-elements'
 import { setLocalData } from './services/local'
+import { firebaseSave } from './services/firebase'
 import store from './store'
-import { addWord, loadDataToStore } from './store/actions/languages'
+import { addWord, loadDataToStore, setTimestamp } from './store/actions/languages'
 
 const PopUpComponent = () => {
   store.dispatch(loadDataToStore())
@@ -19,6 +20,7 @@ const PopUpComponent = () => {
       key: word.value,
       translation: translation.value
     }))
+    store.dispatch(setTimestamp())
   
     word.value = ''
     translation.value = ''
@@ -27,6 +29,7 @@ const PopUpComponent = () => {
   store.subscribe(() => {
     langThumbler(store)
     setLocalData(store.getState())
+    firebaseSave('', store.getState())
   })
 
   addLangBtn.addEventListener('click', goToAddLang)

@@ -1,4 +1,4 @@
-import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE } from '../actionTypes'
+import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE, REMOVE_LANGUAGE } from '../actionTypes'
 
 export const setActiveLanguage = language => {
   return { 
@@ -18,6 +18,13 @@ export const addLanguage = language => {
   return { 
     type: ADD_LANGUAGE,
     payload: language
+  }
+}
+
+export const removeLanguage = languageName => {
+  return {
+    type: REMOVE_LANGUAGE,
+    payload: languageName
   }
 }
 

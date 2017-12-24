@@ -2,7 +2,7 @@ import { goToDiction, goToAddLang } from './helpers/navigation.js'
 import { langThumbler } from './controllers/shared'
 import { getLocalData, setLocalData } from './services/local'
 import store from './store'
-import { addLanguage, addWord, loadLanguages } from './store/actions/languages'
+import { addWord, loadLanguages, setActiveLanguage } from './store/actions/languages'
 
 const PopUpComponent = () => {
   const dictionBtn = document.querySelector('#diction')
@@ -14,6 +14,7 @@ const PopUpComponent = () => {
   
   getLocalData().then(localStorage => {
     store.dispatch(loadLanguages(localStorage.languages))
+    store.dispatch(setActiveLanguage(localStorage.activeLanguage))
   })
 
   const onClickAdd = () => {
@@ -34,8 +35,8 @@ const PopUpComponent = () => {
   }
 
   store.subscribe(() => {
-    setLocalData(store.getState())
     renderLangThumler(store)
+    setLocalData(store.getState())
   })
 
   addLangBtn.addEventListener('click', goToAddLang)
@@ -44,6 +45,7 @@ const PopUpComponent = () => {
 
   // eslint-disable-next-line no-undef
   chrome.runtime.getBackgroundPage(() => {})
+  
 }
 
 document.addEventListener('DOMContentLoaded', PopUpComponent)

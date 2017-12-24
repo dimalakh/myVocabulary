@@ -14,7 +14,6 @@ export const setLocalData = field => {
 //   const { name } = field
 //   const dataToSave = {}
 //   dataToSave[name] = field
-
   return requestBuilder('set', field, resolve => resolve(true))
 }
 

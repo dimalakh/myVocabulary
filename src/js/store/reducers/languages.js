@@ -1,5 +1,4 @@
-import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE, REMOVE_LANGUAGE } from '../actionTypes'
-import { filter } from 'lodash'
+import { LOAD_LANGUAGES, ADD_LANGUAGE, ADD_WORD, SET_ACTIVE_LANGUAGE, REMOVE_LANGUAGE, REMOVE_WORD } from '../actionTypes'
 
 const languages = (state = {}, action) => {
   switch (action.type) {
@@ -25,12 +24,30 @@ const languages = (state = {}, action) => {
     .reduce((languages, language) => {
       return { ...languages, [language.name]: language }
     }, {})
+  case REMOVE_WORD:
+    const { language, word } = action.payload
+    const activeLanguage = state[language]
+
+    const newStorage = Object.keys(activeLanguage.storage)
+    .filter(wordKey => wordKey !== word)
+    .map(name => name)
+    .reduce((words, word) => {
+      return { ...words, [word]: activeLanguage.storage[word] }
+    }, {})
+
+    return { 
+      ...state, 
+      [action.payload.language]: {
+        ...state[action.payload.language],
+        storage: newStorage
+      }
+    }
   default:
     return state
   }
 }
 
-export const activeLanguage = (state = null, action) => {
+export const activeLanguage = (state = 'English', action) => {
   switch (action.type) {
   case SET_ACTIVE_LANGUAGE:
     return action.payload 

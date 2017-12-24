@@ -11,7 +11,7 @@ export function langThumbler (store) {
     const elem = document.createElement('div')
 
     elem.innerHTML = lang
-    elem.classList.add('ui', 'horizontal', 'label');
+    elem.classList.add('ui', 'horizontal', 'label')
 
     /* eslint-disable */
     switch (index) {

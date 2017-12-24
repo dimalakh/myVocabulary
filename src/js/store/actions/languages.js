@@ -57,8 +57,11 @@ export const removeWord = (word, language) => {
 }
 
 export const loadDataToStore = () => dispatch => {
-  firebaseGet().then(firebaseStorage => {
-    getLocalData().then(localStorage => {
+  getLocalData().then(localStorage => {
+    dispatch(loadLanguages(localStorage.languages))
+    dispatch(setActiveLanguage(localStorage.activeLanguage))
+    dispatch(loadTimestamp(localStorage.timestamp))
+    firebaseGet().then(firebaseStorage => {
       if (firebaseStorage.timestamp < localStorage.timestamp) {
         dispatch(loadLanguages(firebaseStorage.languages))
         dispatch(setActiveLanguage(firebaseStorage.activeLanguage))

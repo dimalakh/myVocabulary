@@ -18,7 +18,10 @@ const PopUpComponent = () => {
     store.dispatch(addWord({
       language: store.getState().activeLanguage,
       key: word.value,
-      translation: translation.value
+      translation: translation.value,
+      date: +new Date(),
+      tries: 0,
+      correctAnswers: 0
     }))
     store.dispatch(setTimestamp())
   

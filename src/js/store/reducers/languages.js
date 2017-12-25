@@ -8,8 +8,13 @@ import {
   LOAD_TIMESTAMP,
   SET_TIMESTAMP
 } from '../actionTypes'
-
-const languages = (state = {}, action) => {
+const initialState = {
+  English: {
+    name: 'English',
+    storage: {}
+  }
+}
+const languages = (state = initialState, action) => {
   switch (action.type) {
   case LOAD_LANGUAGES:
     return {...state, ...action.payload}

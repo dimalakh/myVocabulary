@@ -25,7 +25,7 @@ export const addLanguage = language => {
   }
 }
 
-export const setActiveLanguage = language => {
+export const setActiveLanguage = (language = 'English') => {
   return { 
     type: SET_ACTIVE_LANGUAGE,
     payload: language
@@ -57,12 +57,9 @@ export const removeWord = (word, language) => {
 }
 
 export const loadDataToStore = () => dispatch => {
-  getLocalData().then(localStorage => {
-    dispatch(loadLanguages(localStorage.languages))
-    dispatch(setActiveLanguage(localStorage.activeLanguage))
-    dispatch(loadTimestamp(localStorage.timestamp))
-    firebaseGet().then(firebaseStorage => {
-      if (firebaseStorage.timestamp < localStorage.timestamp) {
+  firebaseGet().then(firebaseStorage => { 
+    getLocalData().then(localStorage => {
+      if (firebaseStorage.timestamp > localStorage.timestamp) {
         dispatch(loadLanguages(firebaseStorage.languages))
         dispatch(setActiveLanguage(firebaseStorage.activeLanguage))
         dispatch(loadTimestamp(firebaseStorage.timestamp))
@@ -75,7 +72,7 @@ export const loadDataToStore = () => dispatch => {
   })
 }
 
-export const loadTimestamp = (timestamp) => {
+export const loadTimestamp = (timestamp = '') => {
   return {
     type: LOAD_TIMESTAMP,
     payload: timestamp

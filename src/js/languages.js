@@ -39,7 +39,7 @@ function LanguagesComponent() {
         storage: {}
       }))
       store.dispatch(setTimestamp())
-      input.value = ''
+      // input.value = ''
     }
 
     addBtn.addEventListener('click', createLanguage)
